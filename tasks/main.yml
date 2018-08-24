@@ -8,7 +8,7 @@
 - name: Generate strong Diffie–Hellman key exchange
   include: 'dhparam.yml'
 
-- name: Creating NGINX folder
+- name: Creating NGinx folder
   file:
     dest: '{{ item }}'
     state: directory
@@ -19,7 +19,7 @@
     - '{{ ngx_logs_path }}'
     - '{{ ngx_site_path }}'
 
-- name: NGINX system file transfer
+- name: NGinx system file transfer
   copy:
     src: '{{ item.src }}'
     dest: '{{ item.dest }}'
@@ -31,7 +31,7 @@
     - { src: 'html/', dest: '{{ ngx_site_path }}', owner: '{{ ngx_user }}', group: '{{ ngx_user }}' }
   register: soft_updated
 
-- name: NGINX configuration file transfer
+- name: NGinx configuration file transfer
   template:
     src: '{{ item.src }}'
     dest: '{{ item.dest }}'

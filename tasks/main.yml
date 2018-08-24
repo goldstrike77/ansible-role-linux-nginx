@@ -9,8 +9,8 @@
   file:
     dest: '{{ item }}'
     state: directory
-    owner: {{ ngx_user }}
-    group: {{ ngx_user }}
+    owner: '{{ ngx_user }}'
+    group: '{{ ngx_user }}'
     mode: 0755
   with_items:
     - '{{ ngx_log_path }}'

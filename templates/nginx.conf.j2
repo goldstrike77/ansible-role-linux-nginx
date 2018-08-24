@@ -11,7 +11,7 @@ events {
 
 http {
   add_header Access-Control-Allow-Methods '{{ ", ".join(vars["ngx_allow-methods"]) }}';
-  add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.{{ ngx_domain_name.split('.')[-2] }} *.google-analytics.com; img-src 'self' data: *.{{ ngx_domain_name.split('.')[-2] }}; style-src 'self' 'unsafe-inline' *.{{ ngx_domain_name.split('.')[-2] }} *.googleapis.com; font-src 'self' data: themes.googleusercontent.com fonts.gstatic.com; child-src *.{{ ngx_domain_name.split('.')[-2] }}; object-src 'none'";
+  add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.{{ ngx_domain_name.split('.')[-2] }}.{{ ngx_domain_name.split('.')[-1] }} *.google-analytics.com; img-src 'self' data: *.{{ ngx_domain_name.split('.')[-2] }}.{{ ngx_domain_name.split('.')[-1] }}; style-src 'self' 'unsafe-inline' *.{{ ngx_domain_name.split('.')[-2] }}.{{ ngx_domain_name.split('.')[-1] }} *.googleapis.com; font-src 'self' data: themes.googleusercontent.com fonts.gstatic.com; child-src *.{{ ngx_domain_name.split('.')[-2] }}.{{ ngx_domain_name.split('.')[-1] }}; object-src 'none'";
   add_header Public-Key-Pins "pin-sha256='bb+uANN7nNc/j7R95lkXrwDg3d9C286sIMF8AnXuIJU='; pin-sha256='du6FkDdMcVQ3u8prumAo6t3i3G27uMP2EOhR8R0at/U='; max-age=63072000; includeSubDomains";
   add_header Referrer-Policy "no-referrer-when-downgrade";
   add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload;";

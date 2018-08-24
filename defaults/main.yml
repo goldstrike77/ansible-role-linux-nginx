@@ -1,0 +1,32 @@
+---
+#nginx: 'true'
+ngx_user: 'nobody'
+ngx_ulimit_nproc: '131088'
+ngx_ulimit_nofile: '131088'
+ngx_log_path: '/data/nginx_logs'
+ngx_sit_path: '/data/nginx_site'
+ngx_port:
+ - '80'
+ - '443'
+ngx_allow-methods:
+  - 'POST'
+  - 'PUT'
+  - 'GET'
+  - 'HEAD'
+ngx_worker_connections: '16384'
+ngx_client_body_timeout: '10'
+ngx_client_max_body_size: '2m'
+ngx_set_real_ip_from: '10.101.0.0/16'
+ngx_real_ip_header: 'X-Forwarded-For' # or Cdn-Src-Ip
+ngx_syslog_server: '1.1.1.1'
+ngx_acc_syslog_port: '12301'
+ngx_err_syslog_port: '12301'
+ngx_resolver_dns: '223.5.5.5 223.6.6.6'
+ngx_ssl_protocols: 'intermediate' # or modern
+ngx_charset: 'utf-8'
+ngx_block_spam: 'true'
+ngx_block_agents: 'true'
+ngx_block_common_exploits: 'true'
+ngx_block_file_inject: 'true'
+ngx_block_sql_inject: 'true'
+ngx_domain_name: 'a.example.com'

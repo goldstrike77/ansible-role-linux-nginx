@@ -1,0 +1,51 @@
+---
+- name: Include OS-specific variables
+  include_vars: '{{ ansible_os_family }}.yml'
+
+- name: Include tasks for specific OS
+  include: '{{ ansible_os_family }}.yml'
+
+- name: Creating NGINX folder
+  file:
+    dest: '{{ item }}'
+    state: directory
+    owner: {{ ngx_user }}
+    group: {{ ngx_user }}
+    mode: 0755
+  with_items:
+    - '{{ ngx_log_path }}'
+    - '{{ ngx_sit_path }}'
+
+- name: NGINX system file transfer
+  copy:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+    owner: '{{ item.owner }}'
+    group: '{{ item.group }}'
+    mode: 0644
+  with_items:
+    - { src: 'ssl/', dest: '/etc/nginx/ssl', owner: 'root', group: 'root' }
+    - { src: 'html/', dest: '/data/nginx_site', owner: '{{ ngx_user }}', group: '{{ ngx_user }}' }
+  register: soft_updated
+
+- name: NGINX configuration file transfer
+  template:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - { src: 'nginx.logrotate.j2', dest: '/etc/logrotate.d/nginx' }
+    - { src: 'nginx.conf.j2',      dest: '/etc/nginx/nginx.conf' }
+    - { src: 'default.conf.j2',    dest: '/etc/nginx/conf.d/default.conf' }
+    - { src: 'nginx.service.j2',   dest: '/lib/systemd/system/nginx.service' }
+  register: soft_config
+
+- name: Reload the service
+  shell: echo ''
+  notify: 'Reloading the Nginx service'
+  when: soft_updated.changed or soft_config.changed
+
+- name: Force the handler to run immediately
+  meta: flush_handlers

@@ -1,0 +1,15 @@
+{{ ngx_log_path }}/*.log {
+  daily
+  missingok
+  rotate 15
+  compress
+  delaycompress
+  notifempty
+  create 640 {{ ngx_user }} {{ ngx_user }}
+  sharedscripts
+  postrotate
+    if [ -f /var/run/nginx.pid ]; then
+      kill -USR1 `cat /var/run/nginx.pid`
+    fi
+  endscript
+}

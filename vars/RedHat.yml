@@ -1,0 +1,7 @@
+---
+ngx_repo_name: 'nginx'
+ngx_repo_url: 'http://nginx.org/packages/{{"rhel" if ansible_distribution == "RedHat" else "centos"}}/{{ansible_distribution_version.split(".")[0]}}/{{ansible_architecture}}/'
+disable_gpg_check: yes
+
+ngx_packages_RedHat_7:
+  - 'nginx'

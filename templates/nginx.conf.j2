@@ -1,0 +1,103 @@
+#
+user {{ ngx_user }} {{ ngx_user }};
+worker_processes auto;
+worker_cpu_affinity auto;
+
+events {
+  multi_accept on;
+  use epoll;
+  worker_connections {{ ngx_worker_connections }};
+}
+
+http {
+  add_header Access-Control-Allow-Methods '{{ ", ".join(vars["ngx_allow-methods"]) }}';
+  add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.{{ ngx_domain_name.split('.')[-2] }} *.google-analytics.com; img-src 'self' data: *.{{ ngx_domain_name.split('.')[-2] }}; style-src 'self' 'unsafe-inline' *.{{ ngx_domain_name.split('.')[-2] }} *.googleapis.com; font-src 'self' data: themes.googleusercontent.com fonts.gstatic.com; child-src *.{{ ngx_domain_name.split('.')[-2] }}; object-src 'none'";
+  add_header Public-Key-Pins "pin-sha256='bb+uANN7nNc/j7R95lkXrwDg3d9C286sIMF8AnXuIJU='; pin-sha256='du6FkDdMcVQ3u8prumAo6t3i3G27uMP2EOhR8R0at/U='; max-age=63072000; includeSubDomains";
+  add_header Referrer-Policy "no-referrer-when-downgrade";
+  add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload;";
+  add_header X-Content-Type-Options "nosniff";
+  add_header X-Frame-Options "SAMEORIGIN";
+  add_header X-Xss-Protection "1; mode=block";
+  client_body_temp_path /dev/shm/client_body_temp;
+  client_body_timeout {{ ngx_client_body_timeout }};
+  client_max_body_size {{ ngx_client_max_body_size }};
+  default_type application/octet-stream;
+  etag off;
+  expires max;
+  include mime.types;
+  keepalive_requests 5000;
+  keepalive_timeout 15;
+  open_file_cache max=200000 inactive=20s;
+  open_file_cache_errors on;
+  open_file_cache_min_uses 2;
+  open_file_cache_valid 30s;
+  reset_timedout_connection on;
+  scgi_temp_path /dev/shm/scgi_temp 1 2;
+  send_timeout 30;
+  sendfile on;
+  server_name_in_redirect on;
+  server_names_hash_bucket_size 64;
+  server_tokens off;
+  tcp_nodelay on;
+  tcp_nopush on;
+  types_hash_max_size 2048;
+  uwsgi_temp_path /dev/shm/uwsgi_temp 1 2;
+
+  # Logging Settings #
+  set_real_ip_from {{ ngx_set_real_ip_from }};
+  real_ip_header {{ ngx_real_ip_header }};
+  real_ip_recursive on;
+  open_log_file_cache max=1000 inactive=60s;
+  log_format main   '$remote_addr - $remote_user [$time_local] "$request" '
+                    '$status $body_bytes_sent "$http_referer" '
+                    '"$http_user_agent" '
+                    '$request_time $bytes_sent $request_length';
+  log_format syslog '$remote_addr - $remote_user [$time_local] "$request" '
+                    '$status $body_bytes_sent "$http_referer" "$http_user_agent" "$host" '
+                    '<msec=$msec|connection=$connection|connection_requests=$connection_requests|millis=$request_time>';
+  access_log off;
+  error_log /dev/null crit;
+
+  # FastCGI Settings #
+  fastcgi_buffer_size 128k;
+  fastcgi_buffers 8 256k;
+  fastcgi_intercept_errors on;
+  fastcgi_keep_conn on;
+  fastcgi_read_timeout 60;
+  fastcgi_temp_path /dev/shm/fastcgi_temp 1 2;
+
+  # Proxy Settings #
+  port_in_redirect off;
+  proxy_cache_key "$scheme$host$request_uri";
+  proxy_cache_path /dev/shm/proxy_cache levels=1:2 keys_zone=czone:16m max_size=32m inactive=10m;
+  proxy_cache_valid 200 302 10m;
+  proxy_connect_timeout 20;
+  proxy_read_timeout 20;
+  proxy_send_timeout 20;
+  proxy_temp_path /dev/shm/proxy_temp;
+
+  # COMPRESSION #
+  # GZIP SETTINGS #
+  gzip on;
+  gzip_buffers 16 512k;
+  gzip_comp_level 6;
+  gzip_disable "MSIE [1-6]\.";
+  gzip_http_version 1.1;
+  gzip_proxied expired no-cache no-store private auth;
+  gzip_static on;
+  gzip_types text/xml text/plain text/javascript text/css application/json application/font-woff application/vnd.ms-fontobject application/vnd.apple.mpegurl application/javascript;
+
+  # STATUS CODE #
+  error_page 400 /ErrorPages/HTTP400.html;
+  error_page 401 /ErrorPages/HTTP401.html;
+  error_page 402 /ErrorPages/HTTP402.html;
+  error_page 403 /ErrorPages/HTTP403.html;
+  error_page 404 /ErrorPages/HTTP404.html;
+  error_page 500 /ErrorPages/HTTP500.html;
+  error_page 501 /ErrorPages/HTTP501.html;
+  error_page 502 /ErrorPages/HTTP502.html;
+  error_page 503 /ErrorPages/HTTP503.html;
+
+  # Virtual Host Configs #
+  include /etc/nginx/conf.d/*.conf;
+}

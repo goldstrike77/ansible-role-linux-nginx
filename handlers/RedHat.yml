@@ -1,0 +1,26 @@
+---
+- name: Allow Nginx service port
+  firewalld:
+    port: '{{ item }}/tcp'
+    permanent: 'true'
+    state: 'enabled'
+  with_items:
+    - '{{ ngx_port }}'
+  listen: 'Reloading the Nginx service'
+  when: ansible_distribution_major_version|int > 6
+
+- name: Reload the Nginx firewalld
+  service:
+    name: firewalld
+    state: reloaded
+  listen: 'Reloading the Nginx service'
+  when: ansible_distribution_major_version|int > 6
+
+- name: Ensure Nginx service is enabled
+  systemd:
+    name: 'nginx.service'
+    enabled: yes
+    state: reloaded
+    daemon_reload: yes
+  listen: 'Reloading the Nginx service'
+  when: ansible_distribution_major_version|int > 6

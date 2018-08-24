@@ -31,7 +31,7 @@ server {
 {% endif %}
 
   charset {{ ngx_charset }};
-  root {{ ngx_sit_path }};
+  root {{ ngx_site_path }};
   index index.html;
 
 {% if ngx_block_spam %}
@@ -62,14 +62,14 @@ server {
   # Block unallowed HTTP methods
   if ($request_method !~* '{{ "|".join(vars["ngx_allow-methods"]) }}') { return 405; }
 
-  access_log {{ ngx_log_path }}/access.log main;
-  error_log {{ ngx_log_path }}/error.log notice;
+  access_log {{ ngx_logs_path }}/access.log main;
+  error_log {{ ngx_logs_path }}/error.log notice;
   access_log syslog:server={{ ngx_syslog_server }}:{{ ngx_acc_syslog_port }} syslog;
   error_log syslog:server={{ ngx_syslog_server }}:{{ ngx_err_syslog_port }};
   
   location = /favicon.ico { access_log off; log_not_found off; }
   location = /robots.txt { access_log off; log_not_found off; }
-  location /ErrorPages/ { alias {{ ngx_sit_path }}/ErrorPages/; access_log off; log_not_found off; }
+  location /ErrorPages/ { alias {{ ngx_site_path }}/ErrorPages/; access_log off; log_not_found off; }
 
   location /nginx_status {
     stub_status on;

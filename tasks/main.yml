@@ -5,6 +5,9 @@
 - name: Include tasks for specific OS
   include: '{{ ansible_os_family }}.yml'
 
+- name: Generate strong Diffie–Hellman key exchange
+  include: 'dhparam.yml'
+
 - name: Creating NGINX folder
   file:
     dest: '{{ item }}'
@@ -13,8 +16,8 @@
     group: '{{ ngx_user }}'
     mode: 0755
   with_items:
-    - '{{ ngx_log_path }}'
-    - '{{ ngx_sit_path }}'
+    - '{{ ngx_logs_path }}'
+    - '{{ ngx_site_path }}'
 
 - name: NGINX system file transfer
   copy:
@@ -24,8 +27,8 @@
     group: '{{ item.group }}'
     mode: 0644
   with_items:
-    - { src: 'ssl/', dest: '/etc/nginx/ssl', owner: 'root', group: 'root' }
-    - { src: 'html/', dest: '/data/nginx_site', owner: '{{ ngx_user }}', group: '{{ ngx_user }}' }
+    - { src: 'ssl/', dest: '{{ ngx_conf_path }}/ssl', owner: 'root', group: 'root' }
+    - { src: 'html/', dest: '{{ ngx_site_path }}', owner: '{{ ngx_user }}', group: '{{ ngx_user }}' }
   register: soft_updated
 
 - name: NGINX configuration file transfer
@@ -37,8 +40,8 @@
     mode: 0644
   with_items:
     - { src: 'nginx.logrotate.j2', dest: '/etc/logrotate.d/nginx' }
-    - { src: 'nginx.conf.j2',      dest: '/etc/nginx/nginx.conf' }
-    - { src: 'default.conf.j2',    dest: '/etc/nginx/conf.d/default.conf' }
+    - { src: 'nginx.conf.j2',      dest: '{{ ngx_conf_path }}/nginx.conf' }
+    - { src: 'default.conf.j2',    dest: '{{ ngx_conf_path }}/conf.d/default.conf' }
     - { src: 'nginx.service.j2',   dest: '/lib/systemd/system/nginx.service' }
   register: soft_config
 

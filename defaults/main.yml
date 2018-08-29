@@ -7,6 +7,7 @@ ngx_ulimit_nofile: '131088'
 ngx_conf_path: '/etc/nginx'
 ngx_logs_path: '/data/nginx_logs'
 ngx_site_path: '/data/nginx_site'
+ngx_temp_path: '/dev/shm'
 ngx_port:
  - '80'
  - '443'

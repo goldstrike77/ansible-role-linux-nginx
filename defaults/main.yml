@@ -35,3 +35,7 @@ ngx_dhparam_size: '2048'
 ngx_dhparam_file: '/etc/nginx/ssl/dhparam.pem'
 ngx_dhparam_update: true
 ngx_dhparam_update_interval: 'monthly'
+ngx_HPKP:
+  - 'bb+uANN7nNc/j7R95lkXrwDg3d9C286sIMF8AnXuIJU='
+  - 'du6FkDdMcVQ3u8prumAo6t3i3G27uMP2EOhR8R0at/U='
+  - '980Ionqp3wkYtN9SZVgMzuWQzJta1nfxNPwTem1X0uc='

@@ -19,12 +19,15 @@ ngx_allow-methods:
 ngx_worker_connections: '16384'
 ngx_client_body_timeout: '10'
 ngx_client_max_body_size: '2m'
+ngx_gzip: 'true'
 ngx_set_real_ip_from: '10.101.0.0/16'
 ngx_real_ip_header: 'X-Forwarded-For' # or Cdn-Src-Ip
 ngx_syslog_server: '1.1.1.1'
 ngx_acc_syslog_port: '12301'
 ngx_err_syslog_port: '12302'
-ngx_resolver_dns: '223.5.5.5 223.6.6.6'
+ngx_resolver_dns:
+  - '223.5.5.5'
+  - '223.6.6.6'
 ngx_ssl_protocols: 'intermediate' # or modern
 ngx_charset: 'utf-8'
 ngx_block_spam: 'true'
@@ -34,7 +37,7 @@ ngx_block_file_inject: 'true'
 ngx_block_sql_inject: 'true'
 ngx_dhparam_size: '2048'
 ngx_dhparam_file: '/etc/nginx/ssl/dhparam.pem'
-ngx_dhparam_update: true
+ngx_dhparam_update: 'true'
 ngx_dhparam_update_interval: 'monthly'
 ngx_HPKP:
   - 'bb+uANN7nNc/j7R95lkXrwDg3d9C286sIMF8AnXuIJU='

@@ -7,7 +7,7 @@ server {
 
 server {
   listen 443 ssl;
-  resolver {{ ngx_resolver_dns }} valid=300s;
+  resolver {{ " ".join(vars["ngx_resolver_dns"]) }} valid=300s;
   resolver_timeout 5s;
   server_name {{ ngx_domain_name }};
   ssl_certificate         ssl/certificate.pem;

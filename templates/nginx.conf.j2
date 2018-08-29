@@ -79,6 +79,7 @@ http {
   proxy_temp_path {{ ngx_temp_path }}/proxy_temp;
 
   # COMPRESSION #
+{% if ngx_gzip %}
   # GZIP SETTINGS #
   gzip on;
   gzip_buffers 16 512k;
@@ -88,6 +89,7 @@ http {
   gzip_proxied expired no-cache no-store private auth;
   gzip_static on;
   gzip_types text/xml text/plain text/javascript text/css application/json application/font-woff application/vnd.ms-fontobject application/vnd.apple.mpegurl application/javascript;
+{% endif %}
 
   # STATUS CODE #
   error_page 400 /ErrorPages/HTTP400.html;

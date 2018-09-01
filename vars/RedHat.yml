@@ -5,3 +5,6 @@ disable_gpg_check: yes
 
 ngx_packages_RedHat_7:
   - 'nginx'
+  - 'policycoreutils-python'
+  - 'libselinux-python'
+  - 'libsemanage-python'

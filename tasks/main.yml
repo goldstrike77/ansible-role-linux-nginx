@@ -5,6 +5,9 @@
 - name: Include tasks for specific OS
   include: '{{ ansible_os_family }}.yml'
 
+- name: Straight to getenforce selinux status
+  include: selinux.yml
+
 - name: Generate strong Diffie–Hellman key exchange
   include: 'dhparam.yml'
 

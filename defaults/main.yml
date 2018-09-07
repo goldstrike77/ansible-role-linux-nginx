@@ -1,5 +1,6 @@
 ---
 #nginx: 'true'
+ngx_selinux: 'false'
 ngx_domain_name: 'a.example.com'
 ngx_user: 'nobody'
 ngx_ulimit_nproc: '131088'

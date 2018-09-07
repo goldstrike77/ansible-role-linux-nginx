@@ -12,9 +12,9 @@
   changed_when: false
   become: yes
 
-- name: "Set nginx_selinux to true if getenforce returns Enforcing or Permissive"
+- name: "Set ngx_selinux to true if getenforce returns Enforcing or Permissive"
   set_fact:
-    nginx_selinux: "{{ true }}"
+    ngx_selinux: "{{ true }}"
   when: 'getenforce_bin.stat.exists and ("Enforcing" in sestatus.stdout or "Permissive" in sestatus.stdout)'
 
 - name: "Allow NGinx to start (SELinux)"
@@ -25,7 +25,7 @@
   async: 35
   poll: 0
   when:
-    - nginx_selinux
+    - ngx_selinux
 
 - name: Allow NGinx to set rlimit
   seboolean:
@@ -33,4 +33,4 @@
     state: yes
     persistent: yes
   when:
-    - nginx_selinux    
+    - ngx_selinux

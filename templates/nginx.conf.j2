@@ -3,6 +3,14 @@ user {{ ngx_user }} {{ ngx_user }};
 worker_processes auto;
 worker_cpu_affinity auto;
 
+{% if ngx_version == 'extras' %}
+#Load dynamic modules
+load_module modules/ngx_http_headers_more_filter_module.so;
+load_module modules/ngx_http_brotli_static_module.so;
+load_module modules/ngx_http_brotli_filter_module.so;
+load_module modules/ngx_pagespeed.so;
+{% endif %}
+
 events {
   multi_accept on;
   use epoll;
@@ -17,6 +25,9 @@ http {
   etag off;
   expires max;
   include mime.types;
+{% if ngx_version == 'extras' %}
+  more_set_headers "Server: secure-{{ 59 |random(seed=inventory_hostname) }}{{ inventory_hostname|upper|b64encode|b64encode|replace('==', '') }}";
+{% endif %}
   keepalive_requests 5000;
   keepalive_timeout 15;
   open_file_cache max=200000 inactive=20s;
@@ -69,7 +80,7 @@ http {
   proxy_temp_path {{ ngx_temp_path }}/proxy_temp;
 
   # COMPRESSION #
-{% if ngx_gzip %}
+{% if ngx_compress == 'gzip' %}
   # GZIP SETTINGS #
   gzip on;
   gzip_buffers 16 512k;
@@ -79,6 +90,35 @@ http {
   gzip_proxied expired no-cache no-store private auth;
   gzip_static on;
   gzip_types text/xml text/plain text/javascript text/css application/json application/font-woff application/vnd.ms-fontobject application/vnd.apple.mpegurl application/javascript;
+{% elif ngx_compress == 'brotli' %}
+  # Brotli #
+  brotli on;
+  brotli_comp_level 6;
+  brotli_window 512k;
+  brotli_buffers 16 512k;
+  brotli_min_length 20;
+  brotli_types text/xml text/plain text/javascript text/css application/json application/font-woff application/vnd.ms-fontobject application/vnd.apple.mpegurl application/javascript;
+  brotli_static always;
+{% else %}
+{% endif %}
+
+{% if ngx_pagespeed %}
+  # Google PageSpeed #
+  pagespeed on;
+  pagespeed Statistics on;
+  pagespeed StatisticsLogging on;
+  pagespeed AdminPath /ngx_pagespeed_admin;
+  pagespeed FileCachePath {{ ngx_temp_path }}/ngx_pagespeed_cache;
+  pagespeed FileCacheSizeKb 1024000;
+  pagespeed FileCacheCleanIntervalMs -1;
+  pagespeed HonorCsp on;
+  pagespeed RespectVary on;
+  pagespeed DisableRewriteOnNoTransform off;
+  pagespeed LowercaseHtmlNames on;
+  pagespeed ModifyCachingHeaders off;
+  pagespeed XHeaderValue "";
+  pagespeed FetchHttps enable;
+  pagespeed EnableFilters insert_dns_prefetch,collapse_whitespace,remove_comments,combine_css,rewrite_css,combine_javascript,rewrite_javascript;
 {% endif %}
 
   # Virtual Host Configs #

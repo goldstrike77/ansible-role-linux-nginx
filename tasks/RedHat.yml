@@ -4,10 +4,10 @@
     name: '{{ ngx_repo_name }}'
     description: '{{ ngx_repo_name }} repo'
     file: '{{ ngx_repo_name }}'
-    baseurl: '{{ ngx_repo_url }}'
+    baseurl: '{{ vars["ngx_" + ngx_version + "_repo_url"] }}'
     gpgcheck: no
 
 - name: Install the NGINX packages
   yum:
-    name: '{{ ",".join(vars["ngx_packages_" + ansible_os_family + "_" + ansible_distribution_major_version]) }}'
+    name: '{{ ",".join(vars["ngx_" + ngx_version + "_packages_" + ansible_os_family]) }}'
     state: present

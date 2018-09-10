@@ -1,7 +1,7 @@
 ---
 nginx: 'false'
 ngx_selinux: 'false'
-ngx_domain_name: 'a.example.com'
+ngx_domain_name: '["a.example.com","b.example.com"]'
 ngx_user: 'nobody'
 ngx_ulimit_nproc: '131088'
 ngx_ulimit_nofile: '131088'

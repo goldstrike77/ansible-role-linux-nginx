@@ -10,16 +10,6 @@ events {
 }
 
 http {
-  add_header Access-Control-Allow-Methods '{{ ", ".join(vars["ngx_allow-methods"]) }}';
-  add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.{{ ngx_domain_name.split('.')[-2] }}.{{ ngx_domain_name.split('.')[-1] }} *.google-analytics.com; img-src 'self' data: *.{{ ngx_domain_name.split('.')[-2] }}.{{ ngx_domain_name.split('.')[-1] }}; style-src 'self' 'unsafe-inline' *.{{ ngx_domain_name.split('.')[-2] }}.{{ ngx_domain_name.split('.')[-1] }} *.googleapis.com; font-src 'self' data: themes.googleusercontent.com fonts.gstatic.com; child-src *.{{ ngx_domain_name.split('.')[-2] }}.{{ ngx_domain_name.split('.')[-1] }}; object-src 'none'";
-{% if ngx_HPKP is defined %}
-  add_header Public-Key-Pins 'pin-sha256="{{ "\"; pin-sha256=\"".join(vars["ngx_HPKP"]) }}"; max-age=63072000; includeSubDomains';
-{% endif %}
-  add_header Referrer-Policy "no-referrer-when-downgrade";
-  add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload;";
-  add_header X-Content-Type-Options "nosniff";
-  add_header X-Frame-Options "SAMEORIGIN";
-  add_header X-Xss-Protection "1; mode=block";
   client_body_temp_path {{ ngx_temp_path }}/client_body_temp;
   client_body_timeout {{ ngx_client_body_timeout }};
   client_max_body_size {{ ngx_client_max_body_size }};
@@ -90,17 +80,6 @@ http {
   gzip_static on;
   gzip_types text/xml text/plain text/javascript text/css application/json application/font-woff application/vnd.ms-fontobject application/vnd.apple.mpegurl application/javascript;
 {% endif %}
-
-  # STATUS CODE #
-  error_page 400 /ErrorPages/HTTP400.html;
-  error_page 401 /ErrorPages/HTTP401.html;
-  error_page 402 /ErrorPages/HTTP402.html;
-  error_page 403 /ErrorPages/HTTP403.html;
-  error_page 404 /ErrorPages/HTTP404.html;
-  error_page 500 /ErrorPages/HTTP500.html;
-  error_page 501 /ErrorPages/HTTP501.html;
-  error_page 502 /ErrorPages/HTTP502.html;
-  error_page 503 /ErrorPages/HTTP503.html;
 
   # Virtual Host Configs #
   include /etc/nginx/conf.d/*.conf;

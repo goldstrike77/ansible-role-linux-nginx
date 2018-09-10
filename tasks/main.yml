@@ -11,7 +11,7 @@
 - name: Generate strong Diffie–Hellman key exchange
   include: 'dhparam.yml'
 
-- name: Creating NGinx folder
+- name: Creating NGinx main folder
   file:
     dest: '{{ item }}'
     state: directory
@@ -22,7 +22,17 @@
     - '{{ ngx_logs_path }}'
     - '{{ ngx_site_path }}'
 
-- name: NGinx system file transfer
+- name: Creating NGinx site folder
+  file:
+    dest: '{{ ngx_site_path }}/{{ item }}'
+    state: directory
+    owner: '{{ ngx_user }}'
+    group: '{{ ngx_user }}'
+    mode: 0755
+  with_items:
+    - '{{ ngx_domain_name }}'
+
+- name: NGinx PKI file transfer
   copy:
     src: '{{ item.src }}'
     dest: '{{ item.dest }}'
@@ -31,10 +41,9 @@
     mode: 0644
   with_items:
     - { src: 'ssl/', dest: '{{ ngx_conf_path }}/ssl', owner: 'root', group: 'root' }
-    - { src: 'html/', dest: '{{ ngx_site_path }}', owner: '{{ ngx_user }}', group: '{{ ngx_user }}' }
-  register: soft_updated
+  register: pki_update
 
-- name: NGinx configuration file transfer
+- name: NGinx main configuration file transfer
   template:
     src: '{{ item.src }}'
     dest: '{{ item.dest }}'
@@ -44,14 +53,35 @@
   with_items:
     - { src: 'nginx.logrotate.j2', dest: '/etc/logrotate.d/nginx' }
     - { src: 'nginx.conf.j2',      dest: '{{ ngx_conf_path }}/nginx.conf' }
-    - { src: 'default.conf.j2',    dest: '{{ ngx_conf_path }}/conf.d/default.conf' }
     - { src: 'nginx.service.j2',   dest: '/lib/systemd/system/nginx.service' }
-  register: soft_config
+    - { src: 'default.conf.j2',   dest: '{{ ngx_conf_path }}/conf.d/default.conf' }
+  register: conf_update
+
+- name: NGinx site configuration file transfer
+  template:
+    src: 'site.conf.j2'
+    dest: '{{ ngx_conf_path }}/conf.d/{{ item }}.conf'
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - '{{ ngx_domain_name }}'
+  register: site_update
+
+- name: NGinx site example file transfer
+  copy:
+    src: 'html/'
+    dest: '{{ ngx_site_path }}/{{ item }}'
+    owner: '{{ ngx_user }}'
+    group: '{{ ngx_user }}'
+    mode: 0644
+  with_items:
+    - '{{ ngx_domain_name }}'
 
 - name: Reload the service
   shell: echo ''
   notify: 'Reloading the Nginx service'
-  when: soft_updated.changed or soft_config.changed
+  when: pki_update.changed or conf_update.changed or site_update.changed
 
 - name: Force the handler to run immediately
   meta: flush_handlers

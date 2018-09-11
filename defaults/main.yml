@@ -1,5 +1,5 @@
 ---
-ngx_version: 'extras' # or stable
+ngx_version: 'extras' # or standard
 ngx_selinux: 'false'
 ngx_domain_name: '["a.example.com","b.example.com"]'
 ngx_user: 'nobody'

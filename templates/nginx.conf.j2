@@ -90,7 +90,7 @@ http {
   gzip_proxied expired no-cache no-store private auth;
   gzip_static on;
   gzip_types text/xml text/plain text/javascript text/css application/json application/font-woff application/vnd.ms-fontobject application/vnd.apple.mpegurl application/javascript;
-{% elif ngx_compress == 'brotli' %}
+{% elif ngx_compress == 'brotli' and ngx_version == 'extras' %}
   # Brotli #
   brotli on;
   brotli_comp_level 6;
@@ -102,7 +102,7 @@ http {
 {% else %}
 {% endif %}
 
-{% if ngx_pagespeed %}
+{% if ngx_pagespeed and ngx_version == 'extras' %}
   # Google PageSpeed #
   pagespeed on;
   pagespeed Statistics on;

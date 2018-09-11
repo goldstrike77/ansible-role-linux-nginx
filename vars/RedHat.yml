@@ -11,7 +11,7 @@ ngx_standard_packages_RedHat:
   - 'libsemanage-python'
 
 # Extras version
-ngx_extras_repo_url: 'https://extras.getpagespeed.com/redhat/$releasever/$basearch/'
+ngx_extras_repo_url: 'http://extras.getpagespeed.com/redhat/$releasever/$basearch/'
 ngx_extras_packages_RedHat:
   - '@nginx extras'
   - 'nginx-module-headers-more'

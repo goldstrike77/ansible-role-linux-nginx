@@ -1,5 +1,5 @@
 ---
-ngx_version: 'extras' # or standard
+#ngx_version: 'extras' # or standard
 ngx_selinux: 'false'
 ngx_domain_name: '["a.example.com","b.example.com"]'
 ngx_user: 'nobody'
@@ -20,7 +20,7 @@ ngx_allow-methods:
 ngx_worker_connections: '16384'
 ngx_client_body_timeout: '10'
 ngx_client_max_body_size: '2m'
-ngx_compress: 'brotli' # or gzip
+ngx_compress: 'ture'
 ngx_pagespeed: 'true'
 ngx_set_real_ip_from: '10.101.0.0/16'
 ngx_real_ip_header: 'X-Forwarded-For' # or Cdn-Src-Ip

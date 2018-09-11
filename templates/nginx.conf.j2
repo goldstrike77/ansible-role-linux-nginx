@@ -4,7 +4,7 @@ worker_processes auto;
 worker_cpu_affinity auto;
 
 {% if ngx_version == 'extras' %}
-#Load dynamic modules
+# Load dynamic modules
 load_module modules/ngx_http_headers_more_filter_module.so;
 load_module modules/ngx_http_brotli_static_module.so;
 load_module modules/ngx_http_brotli_filter_module.so;

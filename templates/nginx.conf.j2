@@ -1,7 +1,7 @@
 #
 user {{ ngx_user }} {{ ngx_user }};
-worker_processes auto;
-worker_cpu_affinity auto;
+worker_processes {{ ngx_worker_processes }};
+worker_cpu_affinity {{ ngx_worker_cpu_affinity }};
 
 {% if ngx_version == 'extras' %}
 # Load dynamic modules
@@ -22,27 +22,27 @@ http {
   client_body_timeout {{ ngx_client_body_timeout }};
   client_max_body_size {{ ngx_client_max_body_size }};
   default_type application/octet-stream;
-  etag off;
-  expires max;
+  etag {{ ngx_etag }};
+  expires {{ ngx_expires }};
   include mime.types;
 {% if ngx_version == 'extras' %}
   more_set_headers "Server: secure-{{ 59 |random(seed=inventory_hostname) }}{{ inventory_hostname|upper|b64encode|b64encode|replace('==', '') }}";
 {% endif %}
-  keepalive_requests 5000;
-  keepalive_timeout 15;
+  keepalive_requests {{ ngx_keepalive_requests }};
+  keepalive_timeout {{ ngx_keepalive_timeout }};
   open_file_cache max=200000 inactive=20s;
   open_file_cache_errors on;
   open_file_cache_min_uses 2;
   open_file_cache_valid 30s;
   reset_timedout_connection on;
   scgi_temp_path {{ ngx_temp_path }}/scgi_temp 1 2;
-  send_timeout 30;
+  send_timeout {{ ngx_send_timeout }};
   sendfile on;
   server_name_in_redirect on;
   server_names_hash_bucket_size 64;
-  server_tokens off;
-  tcp_nodelay on;
-  tcp_nopush on;
+  server_tokens {{ ngx_server_tokens }};
+  tcp_nodelay {{ ngx_tcp_nodelay }};
+  tcp_nopush {{ ngx_tcp_nopush }};
   types_hash_max_size 2048;
   uwsgi_temp_path {{ ngx_temp_path }}/uwsgi_temp 1 2;
 
@@ -66,7 +66,7 @@ http {
   fastcgi_buffers 8 256k;
   fastcgi_intercept_errors on;
   fastcgi_keep_conn on;
-  fastcgi_read_timeout 60;
+  fastcgi_read_timeout {{ ngx_fastcgi_read_timeout }};
   fastcgi_temp_path {{ ngx_temp_path }}/fastcgi_temp 1 2;
 
   # Proxy Settings #
@@ -74,9 +74,9 @@ http {
   proxy_cache_key "$scheme$host$request_uri";
   proxy_cache_path {{ ngx_temp_path }}/proxy_cache levels=1:2 keys_zone=czone:16m max_size=32m inactive=10m;
   proxy_cache_valid 200 302 10m;
-  proxy_connect_timeout 20;
-  proxy_read_timeout 20;
-  proxy_send_timeout 20;
+  proxy_connect_timeout {{ ngx_proxy_connect_timeout }};
+  proxy_read_timeout {{ ngx_proxy_read_timeout }};
+  proxy_send_timeout {{ ngx_proxy_send_timeout }};
   proxy_temp_path {{ ngx_temp_path }}/proxy_temp;
 
   # COMPRESSION #
@@ -122,5 +122,5 @@ http {
 {% endif %}
 
   # Virtual Host Configs #
-  include /etc/nginx/conf.d/*.conf;
+  include {{ ngx_conf_path }}/conf.d/*.conf;
 }

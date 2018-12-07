@@ -10,4 +10,4 @@
 - name: Install the NGINX packages
   yum:
     name: '{{ ",".join(vars["ngx_" + ngx_version + "_packages_" + ansible_os_family]) }}'
-    state: present
+    state: 'latest'

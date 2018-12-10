@@ -23,5 +23,5 @@ if ($query_string ~ "[a-zA-Z0-9_]=http://|[a-zA-Z0-9_]=(\.\.//?)+|[a-zA-Z0-9_]=/
 if ($query_string ~ "union.*select.*\(|union.*all.*select.*|concat.*\(") { return 403; }
 {% endif %}
 
-# Block unallowed HTTP methods
+# Block unallowed HTTP methods #
 if ($request_method !~* '{{ "|".join(vars["ngx_allow-methods"]) }}') { return 405; }

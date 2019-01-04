@@ -4,11 +4,12 @@ ngx_repo_name: 'nginx'
 
 # Standard version
 ngx_standard_repo_url: 'http://nginx.org/packages/centos/$releasever/$basearch/'
-ngx_standard_packages_RedHat:
-  - 'nginx'
+ngx_dependent_packages_RedHat:
   - 'policycoreutils-python'
   - 'libselinux-python'
   - 'libsemanage-python'
+ngx_standard_packages_RedHat:
+  - 'nginx'
 
 # Extras version
 ngx_extras_repo_url: 'http://extras.getpagespeed.com/redhat/$releasever/$basearch/'

@@ -7,13 +7,20 @@
     baseurl: '{{ vars["ngx_" + ngx_version + "_repo_url"] }}'
     gpgcheck: no
 
+- name: Install the NGinx dependent packages
+  yum:
+    name: '{{ ",".join(vars["ngx_dependent_packages_" + ansible_os_family]) }}'
+    state: 'latest'
+
 - name: Install the NGinx packages
   yum:
     name: '{{ ",".join(vars["ngx_standard_packages_" + ansible_os_family]) }}'
     state: 'latest'
+    enablerepo: '{{ ngx_repo_name }}'
 
 - name: Install the NGinx extras packages
   yum:
     name: '{{ ",".join(vars["ngx_extras_packages_" + ansible_os_family]) }}'
     state: 'latest'
+    enablerepo: '{{ ngx_repo_name }}'
   when: ngx_version == 'extras'

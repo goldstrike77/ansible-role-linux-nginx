@@ -6,62 +6,68 @@ ngx_logs_path: '/data/nginx_logs'
 ngx_site_path: '/data/nginx_site'
 ngx_temp_path: '/dev/shm'
 ngx_selinux: 'false'
+ngx_domain_name: '["a.example.com","b.example.com"]'
 
 # Listen port #
 ngx_port:
-  - '80'
-  - '443'
+  http: '80'
+  https: '443'
 
-# NGinx configuration Variables #
-ngx_acc_syslog_port: '12301'
-ngx_block_agents: 'true'
-ngx_block_common_exploits: 'true'
-ngx_block_file_inject: 'true'
-ngx_block_spam: 'true'
-ngx_block_sql_inject: 'true'
-ngx_charset: 'utf-8'
-ngx_client_body_timeout: '10'
-ngx_client_max_body_size: '2m'
-ngx_compress: 'ture'
-ngx_dhparam_file: '/etc/nginx/ssl/dhparam.pem'
-ngx_dhparam_size: '2048'
-ngx_dhparam_update: 'true'
-ngx_dhparam_update_interval: 'monthly'
-ngx_domain_name: '["a.example.com","b.example.com"]'
-ngx_err_syslog_port: '12302'
-ngx_etag: 'off'
-ngx_expires: 'max'
-ngx_fastcgi_read_timeout: '60'
-ngx_keepalive_requests: '5000'
-ngx_keepalive_timeout: '15'
-ngx_pagespeed: 'true'
-ngx_proxy_connect_timeout: '20'
-ngx_proxy_read_timeout: '20'
-ngx_proxy_send_timeout: '20'
-ngx_real_ip_header: 'X-Forwarded-For' # X-Forwarded-For or Cdn-Src-Ip
-ngx_send_timeout: '30'
-ngx_server_tokens: 'off'
-ngx_set_real_ip_from: '10.101.0.0/16'
-ngx_ssl_protocols: 'intermediate' # intermediate or modern
-ngx_syslog_server: '1.1.1.1'
-ngx_tcp_nodelay: 'on'
-ngx_tcp_nopush: 'on'
-ngx_ulimit_nofile: '131088'
-ngx_ulimit_nproc: '131088'
-ngx_user: 'nobody'
-ngx_worker_connections: '16384'
-ngx_worker_cpu_affinity: 'auto'
-ngx_worker_processes: 'auto'
-ngx_allow-methods:
+# System Variables #
+ngx_arg:
+  acc_syslog_port: '12301'
+  block_agents: true
+  block_common_exploits: true
+  block_file_inject: true
+  block_spam: true
+  block_sql_inject: true
+  charset: 'utf-8'
+  client_body_timeout: '10'
+  client_max_body_size: '2m'
+  compress: ture
+  dhparam_file: 'dhparam.pem'
+  dhparam_size: '2048'
+  dhparam_update: true
+  dhparam_update_interval: 'monthly'
+  err_syslog_port: '12302'
+  etag: 'off'
+  expires: 'max'
+  fastcgi_read_timeout: '60'
+  keepalive_requests: '5000'
+  keepalive_timeout: '15'
+  pagespeed: true
+  proxy_connect_timeout: '20'
+  proxy_read_timeout: '20'
+  proxy_send_timeout: '20'
+  real_ip_header: 'X-Forwarded-For' # X-Forwarded-For or Cdn-Src-Ip
+  send_timeout: '30'
+  server_tokens: 'off'
+  set_real_ip_from: '10.101.0.0/16'
+  ssl_protocols: 'intermediate' # intermediate or modern
+  syslog_server: '1.1.1.1'
+  tcp_nodelay: 'on'
+  tcp_nopush: 'on'
+  ulimit_nofile: '131088'
+  ulimit_nproc: '131088'
+  user: 'nobody'
+  worker_connections: '16384'
+  worker_cpu_affinity: 'auto'
+  worker_processes: 'auto'
+
+# Allow-Methods Variables #
+ngx_allow_methods:
   - 'POST'
   - 'PUT'
   - 'GET'
   - 'HEAD'
+
+# DNS Variables #
 ngx_resolver_dns:
   - '223.5.5.5'
   - '223.6.6.6'
   - '8.8.8.8'
-  - '8.8.4.4'
+
+# HTTP Public Key Pinning Variables #
 ngx_HPKP:
   - 'bb+uANN7nNc/j7R95lkXrwDg3d9C286sIMF8AnXuIJU='
   - 'du6FkDdMcVQ3u8prumAo6t3i3G27uMP2EOhR8R0at/U='

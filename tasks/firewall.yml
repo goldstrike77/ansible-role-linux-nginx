@@ -1,0 +1,10 @@
+---
+- name: Allow NGinx service port
+  firewalld:
+    port: '{{ item.value }}/tcp'
+    permanent: 'true'
+    immediate: 'true'
+    state: 'enabled'
+  with_dict:
+    - '{{ ngx_port }}'
+  when: ansible_distribution_major_version|int > 6

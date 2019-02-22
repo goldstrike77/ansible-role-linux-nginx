@@ -5,8 +5,11 @@
 - name: Include tasks for specific OS
   include: '{{ ansible_os_family }}.yml'
 
+- name: Configure the NGinx firewall
+  include: 'firewall.yml'
+
 - name: Straight to getenforce selinux status
-  include: selinux.yml
+  include: 'selinux.yml'
 
 - name: Generate strong Diffie–Hellman key exchange
   include: 'dhparam.yml'
@@ -15,8 +18,8 @@
   file:
     dest: '{{ item }}'
     state: directory
-    owner: '{{ ngx_user }}'
-    group: '{{ ngx_user }}'
+    owner: '{{ ngx_arg.user }}'
+    group: '{{ ngx_arg.user }}'
     mode: 0755
   with_items:
     - '{{ ngx_logs_path }}'
@@ -26,8 +29,8 @@
   file:
     dest: '{{ ngx_site_path }}/{{ item }}'
     state: directory
-    owner: '{{ ngx_user }}'
-    group: '{{ ngx_user }}'
+    owner: '{{ ngx_arg.user }}'
+    group: '{{ ngx_arg.user }}'
     mode: 0755
   with_items:
     - '{{ ngx_domain_name }}'
@@ -73,8 +76,8 @@
   copy:
     src: 'html/'
     dest: '{{ ngx_site_path }}/{{ item }}'
-    owner: '{{ ngx_user }}'
-    group: '{{ ngx_user }}'
+    owner: '{{ ngx_arg.user }}'
+    group: '{{ ngx_arg.user }}'
     mode: 0644
   with_items:
     - '{{ ngx_domain_name }}'

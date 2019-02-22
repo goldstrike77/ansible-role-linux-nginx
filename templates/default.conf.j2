@@ -4,3 +4,14 @@ server {
   server_name _;
   return 301 https://$host$request_uri;
 }
+
+server {
+  listen 127.0.0.1:{{ ngx_port.api }};
+  server_name _;
+  location /api {
+    stub_status on;
+    allow 127.0.0.1;
+    access_log off;
+    deny all;
+  }
+}

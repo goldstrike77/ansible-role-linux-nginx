@@ -1,0 +1,33 @@
+---
+- name: Add Prometheus NGinx exporter YUM repositories
+  yum_repository:
+    name: '{{ ngx_exporter_repo_name }}'
+    description: '{{ ngx_exporter_repo_name }} YUM repository'
+    file: '{{ ngx_exporter_repo_name }}'
+    baseurl: '{{ ngx_exporter_repo_url }}'
+    gpgcheck: no
+
+- name: Install the Prometheus NGinx exporter packages
+  yum:
+    name: '{{ item }}'
+    state: 'present'
+  with_items:
+    - '{{ ngx_exporter_software }}'
+
+- name: Prometheus NGinx exporter configure file transfer
+  template:
+    src: 'nginx_exporter.default.j2'
+    dest: '/etc/default/nginx_exporter'
+    owner: 'root'
+    group: 'root'
+    mode: 0644
+  register: conf_update
+
+- name: Prometheus NGinx exporter service is enabled
+  systemd:
+    name: 'nginx_exporter.service'
+    enabled: 'yes'
+    state: 'restarted'
+    daemon_reload: yes
+  when:
+    - conf_update|changed

@@ -10,6 +10,8 @@ ngx_domain_name: '["a.example.com","b.example.com"]'
 
 # Listen port #
 ngx_port:
+  api: '10088'
+  exporter: '9113'
   http: '80'
   https: '443'
 

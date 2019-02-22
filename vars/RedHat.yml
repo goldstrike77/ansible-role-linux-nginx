@@ -18,3 +18,8 @@ ngx_extras_packages_RedHat:
   - 'nginx-module-headers-more'
   - 'nginx-module-nbr'
   - 'nginx-module-nps'
+
+# Nginx prometheus exporter repo
+ngx_exporter_repo_name: 'prometheus'
+ngx_exporter_repo_url: "http://cache.omygods.com/prometheus-rpm/release/el/{{ansible_distribution_version.split('.')[0]}}/$basearch"
+ngx_exporter_software: 'nginx_exporter'

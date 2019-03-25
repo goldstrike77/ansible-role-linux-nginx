@@ -7,6 +7,12 @@ ngx_site_path: '/data/nginx_site'
 ngx_temp_path: '/dev/shm'
 ngx_selinux: 'false'
 ngx_domain_name: '["a.example.com","b.example.com"]'
+consul_is_register: false
+consul_exporter_token: '00000000-0000-0000-0000-000000000000'
+consul_clients:
+  - '1.1.1.1'
+  - '1.1.1.2'
+consul_http_port: '8500'
 
 # Listen port #
 ngx_port:

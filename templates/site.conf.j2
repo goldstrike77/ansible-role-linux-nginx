@@ -16,7 +16,9 @@ server {
   server_name {{ item }};
   ssl_certificate         ssl/certificate.pem;
   ssl_certificate_key     ssl/server.key;
+{% if ngx_dhparam %}
   ssl_dhparam             ssl/dhparam.pem;
+{% endif %}
   ssl_prefer_server_ciphers on;
   ssl_session_cache shared:SSL:50m;
   ssl_session_ticket_key  ssl/session_ticket.key;

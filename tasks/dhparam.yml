@@ -11,21 +11,21 @@
 
 - name: Output directory for Diffie-Hellman parameters exists
   file:
-    path: "{{ ngx_conf_path }}/ssl/{{ ngx_arg.dhparam_file | dirname }}"
+    path: "{{ ngx_conf_path }}/ssl/{{ ngx_dhparam_file | dirname }}"
     state: directory
 
 - name: The Diffie-Hellman parameter file is generated
-  command: "{{ dhparam_openssl_binary }} dhparam -out '{{ ngx_conf_path }}/ssl/{{ ngx_arg.dhparam_file }}' {{ ngx_arg.dhparam_size }}"
+  command: "{{ dhparam_openssl_binary }} dhparam -out '{{ ngx_conf_path }}/ssl/{{ ngx_dhparam_file }}' {{ ngx_arg.dhparam_size }}"
   args:
-    creates: "{{ ngx_conf_path }}/ssl/{{ ngx_arg.dhparam_file }}"
+    creates: "{{ ngx_conf_path }}/ssl/{{ ngx_dhparam_file }}"
   when: not ansible_check_mode
 
 - set_fact:
-    _cronjob_name: "dhparam_nginx_{{ ngx_arg.dhparam_file | hash('sha1') }}"
+    _cronjob_name: "dhparam_nginx_{{ ngx_dhparam_file | hash('sha1') }}"
 
-- name: 'Configured to update the DH params {{ ngx_arg.dhparam_update_interval }}'
+- name: 'Configured to update the DH params {{ ngx_dhparam_update_interval }}'
   cron:
     name: "{{ _cronjob_name }}"
-    job: "{{dhparam_openssl_binary}} dhparam -out '{{ ngx_conf_path }}/ssl/{{ ngx_arg.dhparam_file }}' {{ ngx_arg.dhparam_size }}"
-    state: "{{ 'present' if ngx_arg.dhparam_update else 'absent' }}"
-    special_time: "{{ ngx_arg.dhparam_update_interval }}"
+    job: "{{dhparam_openssl_binary}} dhparam -out '{{ ngx_conf_path }}/ssl/{{ ngx_dhparam_file }}' {{ ngx_arg.dhparam_size }}"
+    state: "{{ 'present' if ngx_dhparam_update else 'absent' }}"
+    special_time: "{{ ngx_dhparam_update_interval }}"

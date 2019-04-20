@@ -13,6 +13,7 @@
 
 - name: Generate strong Diffie–Hellman key exchange
   include: 'dhparam.yml'
+  when: ngx_dhparam
 
 - name: Creating NGinx main folder
   file:

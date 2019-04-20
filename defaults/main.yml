@@ -39,10 +39,6 @@ ngx_arg:
   charset: 'utf-8' # Adds the specified charset for response header field.
   client_body_timeout: '10' # Defines a timeout for reading client request body.
   client_max_body_size: '2m' # The maximum allowed size of the client request body.
-  dhparam_file: 'dhparam.pem'
-  dhparam_size: '2048'
-  dhparam_update: true
-  dhparam_update_interval: 'monthly'
   etag: 'off' # Enables or disables the "ETag" response header field for static resources.
   expires: 'max' # "Cache-Control" response header fields.
   fastcgi_read_timeout: '60' # Defines a timeout for reading a response from the FastCGI server.
@@ -82,8 +78,15 @@ ngx_resolver_dns: # Configures name servers used to resolve names of upstream se
   - '8.8.8.8'
 ngx_resolver_timeout: '5s' # Sets a timeout for name resolution.
 
-# HTTP Public Key Pinning Variables #
-ngx_HPKP:
+# DH parameters #
+ngx_dhparam: false # Enables or disables Diffie Hellman parameters.
+ngx_dhparam_file: 'dhparam.pem' # Diffie Hellman key file.
+ngx_dhparam_size: '2048' # Diffie Hellman key size.
+ngx_dhparam_update: true # Enables or disables key automatic updates.
+ngx_dhparam_update_interval: 'monthly' # Key renewal period.
+
+# HTTP Public Key Pinning Extension #
+ngx_HPKP: # Public Key Pinning.
   - 'bb+uANN7nNc/j7R95lkXrwDg3d9C286sIMF8AnXuIJU='
   - 'du6FkDdMcVQ3u8prumAo6t3i3G27uMP2EOhR8R0at/U='
   - '980Ionqp3wkYtN9SZVgMzuWQzJta1nfxNPwTem1X0uc='

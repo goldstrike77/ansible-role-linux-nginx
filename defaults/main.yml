@@ -1,79 +1,86 @@
 ---
 # General parameters #
 #ngx_version: 'extras' # extras or standard
-ngx_conf_path: '/etc/nginx'
-ngx_logs_path: '/data/nginx_logs'
-ngx_site_path: '/data/nginx_site'
-ngx_temp_path: '/dev/shm'
-ngx_selinux: 'false'
-ngx_domain_name: '["a.example.com","b.example.com"]'
-consul_is_register: false
-consul_exporter_token: '00000000-0000-0000-0000-000000000000'
-consul_clients:
-  - '1.1.1.1'
-  - '1.1.1.2'
-consul_http_port: '8500'
+ngx_conf_path: '/etc/nginx' # Specify the NGinx configure directory.
+ngx_logs_path: '/data/nginx_logs' # Specify the NGinx logs directory.
+ngx_site_path: '/data/nginx_site' # Specify the NGinx site directory.
+ngx_temp_path: '/dev/shm' # Defines a directory for storing temporary files.
+ngx_selinux: false # SELinux security policy.
+ngx_domain_name: '["a.example.com","b.example.com"]' # Server names.
+ngx_block_agents: false # Enables or disables block unsafe User Agents.
+ngx_block_common_exploits: false # Enables or disables block exploits.
+ngx_block_file_inject: false # Enables or disables block file injections.
+ngx_block_spam: false # Enables or disables block spam.
+ngx_block_sql_inject: false # Enables or disables block SQL injections.
+ngx_compress: false # Enables or disables compression.
+ngx_pagespeed: false # Enables or disables pagespeed modules.
+ngx_ssl_protocols: 'intermediate' # intermediate or modern, defines SSL protocol profile.
+ngx_syslog: false # Enables or disables syslog
+ngx_syslog_server: '1.1.1.1' # Defines the address of a syslog server.
+ngx_acc_syslog_port: '12301' # Defines the input port of a syslog server for access log.
+ngx_err_syslog_port: '12302' # Defines the input port of a syslog server for error log.
+
+# Service Mesh #
+environments: 'SIT' # Define the service environment.
+consul_is_register: false # Whether register a client service with consul.
+consul_exporter_token: '00000000-0000-0000-0000-000000000000' # Consul client ACL token.
+consul_clients: 'localhost' # List of consul clients.
+consul_http_port: '8500' # The consul HTTP API port.
 
 # Listen port #
 ngx_port:
-  api: '10088'
-  exporter: '9113'
-  http: '80'
-  https: '443'
+  api: '10088' # Status listen port.
+  exporter: '9113' # NGinx exporter listen port.
+  http: '80' # HTTP listen port.
+  https: '443' # HTTPs listen port.
 
 # System Variables #
 ngx_arg:
-  acc_syslog_port: '12301'
-  block_agents: true
-  block_common_exploits: true
-  block_file_inject: true
-  block_spam: true
-  block_sql_inject: true
-  charset: 'utf-8'
-  client_body_timeout: '10'
-  client_max_body_size: '2m'
-  compress: ture
+  charset: 'utf-8' # Adds the specified charset for response header field.
+  client_body_timeout: '10' # Defines a timeout for reading client request body.
+  client_max_body_size: '2m' # The maximum allowed size of the client request body.
   dhparam_file: 'dhparam.pem'
   dhparam_size: '2048'
   dhparam_update: true
   dhparam_update_interval: 'monthly'
-  err_syslog_port: '12302'
-  etag: 'off'
-  expires: 'max'
-  fastcgi_read_timeout: '60'
-  keepalive_requests: '5000'
-  keepalive_timeout: '15'
-  pagespeed: true
-  proxy_connect_timeout: '20'
-  proxy_read_timeout: '20'
-  proxy_send_timeout: '20'
-  real_ip_header: 'X-Forwarded-For' # X-Forwarded-For or Cdn-Src-Ip
-  send_timeout: '30'
-  server_tokens: 'off'
-  set_real_ip_from: '10.101.0.0/16'
-  ssl_protocols: 'intermediate' # intermediate or modern
-  syslog_server: '1.1.1.1'
-  tcp_nodelay: 'on'
-  tcp_nopush: 'on'
-  ulimit_nofile: '131088'
-  ulimit_nproc: '131088'
-  user: 'nobody'
-  worker_connections: '16384'
-  worker_cpu_affinity: 'auto'
-  worker_processes: 'auto'
+  etag: 'off' # Enables or disables the "ETag" response header field for static resources.
+  expires: 'max' # "Cache-Control" response header fields.
+  fastcgi_read_timeout: '60' # Defines a timeout for reading a response from the FastCGI server.
+  keepalive_requests: '5000' # The maximum number of requests that can be served through one keep-alive connection.
+  keepalive_timeout: '15' # Sets a timeout during which a keep-alive client connection will stay open on the server side.
+  proxy_connect_timeout: '20' # Defines a timeout for establishing a connection with a proxied server.
+  proxy_read_timeout: '20' # Defines a timeout for reading a response from the proxied server.
+  proxy_send_timeout: '20' # Sets a timeout for transmitting a request to the proxied server.
+  real_ip_header: 'X-Forwarded-For' # Defines the request header field whose value will be used to replace the client address.
+  send_timeout: '30' # Sets a timeout for transmitting a response to the client.
+  server_tokens: 'off' # Enables or disables nginx version on "Server" response header field.
+  set_real_ip_from: # Defines trusted addresses that are known to send correct replacement addresses.
+    - '10.0.0.0/8'
+    - '172.16.0.0/11'
+    - '192.168.0.0/24'
+    - '127.0.0.1'
+  tcp_nodelay: 'on' # Enables or disables the use of the TCP_NODELAY option.
+  tcp_nopush: 'on' # Enables or disables the use of the TCP_NOPUSH socket option.
+  ulimit_nofile: '131088' # The number of files launched by systemd.
+  ulimit_nproc: '131088' # The number of processes launched by systemd.
+  user: 'nobody' # Defines user and group credentials used by worker processes.
+  worker_connections: '16384' # Sets the maximum number of simultaneous connections that can be opened by a worker process.
+  worker_cpu_affinity: 'auto' # Binds worker processes to the sets of processor.
+  worker_processes: 'auto' # Defines the number of worker processes.
 
 # Allow-Methods Variables #
-ngx_allow_methods:
+ngx_allow_methods: # Define allowable HTTP methods.
   - 'POST'
   - 'PUT'
   - 'GET'
   - 'HEAD'
 
 # DNS Variables #
-ngx_resolver_dns:
+ngx_resolver_dns: # Configures name servers used to resolve names of upstream servers into addresses.
   - '223.5.5.5'
   - '223.6.6.6'
   - '8.8.8.8'
+ngx_resolver_timeout: '5s' # Sets a timeout for name resolution.
 
 # HTTP Public Key Pinning Variables #
 ngx_HPKP:

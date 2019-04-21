@@ -6,5 +6,8 @@
     immediate: 'true'
     state: 'enabled'
   with_dict:
-    - '{{ ngx_port }}'
+    - '{{ ngx_port_api }}'
+    - '{{ ngx_port_exporter }}'
+    - '{{ ngx_port_http }}'
+    - '{{ ngx_port_https }}'
   when: ansible_distribution_major_version|int > 6

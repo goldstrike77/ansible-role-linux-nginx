@@ -1,12 +1,12 @@
 #
 server {
-  listen {{ ngx_port.http }} default_server;
+  listen {{ ngx_port_http }} default_server;
   server_name _;
   return 301 https://$host$request_uri;
 }
 
 server {
-  listen 127.0.0.1:{{ ngx_port.api }};
+  listen 127.0.0.1:{{ ngx_port_api }};
   server_name _;
   location /api {
     stub_status on;

@@ -10,7 +10,7 @@ server {
   add_header X-Content-Type-Options "nosniff";
   add_header X-Frame-Options "SAMEORIGIN";
   add_header X-Xss-Protection "1; mode=block";
-  listen {{ ngx_port.https }} ssl http2;
+  listen {{ ngx_port_https }} ssl http2;
   resolver {{ " ".join(vars["ngx_resolver_dns"]) }} valid=300s;
   resolver_timeout {{ ngx_resolver_timeout }};
   server_name {{ item }};

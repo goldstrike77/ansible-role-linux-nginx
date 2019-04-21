@@ -1,24 +1,25 @@
 ---
 # General parameters #
-#ngx_version: 'extras' # extras or standard
-ngx_conf_path: '/etc/nginx' # Specify the NGinx configure directory.
-ngx_logs_path: '/data/nginx_logs' # Specify the NGinx logs directory.
-ngx_site_path: '/data/nginx_site' # Specify the NGinx site directory.
-ngx_temp_path: '/dev/shm' # Defines a directory for storing temporary files.
-ngx_selinux: false # SELinux security policy.
-ngx_domain_name: '["a.example.com","b.example.com"]' # Server names.
+ngx_acc_syslog_port: '12301' # Defines the input port of a syslog server for access log.
 ngx_block_agents: false # Enables or disables block unsafe User Agents.
 ngx_block_common_exploits: false # Enables or disables block exploits.
 ngx_block_file_inject: false # Enables or disables block file injections.
 ngx_block_spam: false # Enables or disables block spam.
 ngx_block_sql_inject: false # Enables or disables block SQL injections.
 ngx_compress: false # Enables or disables compression.
+ngx_conf_path: '/etc/nginx' # Specify the NGinx configure directory.
+ngx_dhparam: false # Enables or disables Diffie Hellman parameters.
+ngx_domain_name: '["a.example.com","b.example.com"]' # Server names.
+ngx_err_syslog_port: '12302' # Defines the input port of a syslog server for error log.
+ngx_is_install: false # A boolean value, whether install the NGinx.
+ngx_logs_path: '/data/nginx_logs' # Specify the NGinx logs directory.
 ngx_pagespeed: false # Enables or disables pagespeed modules.
+ngx_selinux: false # SELinux security policy.
+ngx_site_path: '/data/nginx_site' # Specify the NGinx site directory.
 ngx_ssl_protocols: 'intermediate' # intermediate or modern, defines SSL protocol profile.
 ngx_syslog: false # Enables or disables syslog
-ngx_syslog_server: '1.1.1.1' # Defines the address of a syslog server.
-ngx_acc_syslog_port: '12301' # Defines the input port of a syslog server for access log.
-ngx_err_syslog_port: '12302' # Defines the input port of a syslog server for error log.
+ngx_version: 'standard' # extras or standard, extras includes party modules likes PageSpeed,Brotli,ModSecurity,Headers-More and much more.
+ngx_waf: false # Enables or disables ModSecurity modules.
 
 # Service Mesh #
 environments: 'SIT' # Define the service environment.
@@ -28,11 +29,10 @@ consul_clients: 'localhost' # List of consul clients.
 consul_http_port: '8500' # The consul HTTP API port.
 
 # Listen port #
-ngx_port:
-  api: '10088' # Status listen port.
-  exporter: '9113' # NGinx exporter listen port.
-  http: '80' # HTTP listen port.
-  https: '443' # HTTPs listen port.
+ngx_port_api: '10088' # Status listen port.
+ngx_port_exporter: '9113' # NGinx exporter listen port.
+ngx_port_http: '80' # HTTP listen port.
+ngx_port_https: '443' # HTTPs listen port.
 
 # System Variables #
 ngx_arg:
@@ -79,7 +79,6 @@ ngx_resolver_dns: # Configures name servers used to resolve names of upstream se
 ngx_resolver_timeout: '5s' # Sets a timeout for name resolution.
 
 # DH parameters #
-ngx_dhparam: false # Enables or disables Diffie Hellman parameters.
 ngx_dhparam_file: 'dhparam.pem' # Diffie Hellman key file.
 ngx_dhparam_size: '2048' # Diffie Hellman key size.
 ngx_dhparam_update: true # Enables or disables key automatic updates.

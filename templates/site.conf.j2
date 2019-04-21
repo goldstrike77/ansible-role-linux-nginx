@@ -7,7 +7,7 @@ server {
   # Enables Public Key Pinning Extension for HTTP (HPKP).
   add_header Public-Key-Pins 'pin-sha256="{{ "\"; pin-sha256=\"".join(vars["ngx_HPKP"]) }}"; max-age=63072000; includeSubDomains';
 {% endif %}
-  # The browser will not send the referrer header when navigating from HTTPS to HTTP, but will always send the full URL in the referrer header when navigating from HTTP to any origin.
+  # The spec for Referrer Policy.
   add_header Referrer-Policy "no-referrer-when-downgrade";
   # HSTS (ngx_http_headers_module is required) (31536000 seconds = 12 months)
   add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload;";
@@ -55,9 +55,9 @@ server {
   
   location = /favicon.ico { access_log off; log_not_found off; }
   location = /robots.txt { access_log off; log_not_found off; }
-{% if ngx_arg.pagespeed %}
+{% if ngx_pagespeed %}
   location ~ "\.pagespeed\.([a-z]\.)?[a-z]{2}\.[^.]{10}\.[^.]+" { add_header "" ""; }
-  location /ngx_pagespeed_admin { allow 127.0.0.1; allow {{ ngx_arg.set_real_ip_from }}; access_log off; deny all; }
+  location /ngx_pagespeed_admin { allow {{ "; allow ".join(vars["ngx_set_real_ip_from"]) }}; access_log off; deny all; }
 {% endif %}
 
   include {{ ngx_conf_path }}/security.conf;

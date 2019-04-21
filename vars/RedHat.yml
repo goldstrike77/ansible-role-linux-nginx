@@ -1,19 +1,23 @@
 ---
-disable_gpg_check: yes
 ngx_repo_name: 'nginx'
-
 ngx_dependent_packages_RedHat:
   - 'policycoreutils-python'
   - 'libselinux-python'
   - 'libsemanage-python'
 
 # Standard version
-ngx_standard_repo_url: 'http://nginx.org/packages/centos/$releasever/$basearch/'
+ngx_standard_repo:
+  - name: 'basearch'
+    url: 'http://nginx.org/packages/centos/$releasever/$basearch/'
 ngx_standard_packages_RedHat:
   - 'nginx'
 
 # Extras version
-ngx_extras_repo_url: 'http://extras.getpagespeed.com/redhat/$releasever/$basearch/'
+ngx_extras_repo:
+  - name: 'basearch'
+    url: 'http://extras.getpagespeed.com/redhat/$releasever/$basearch/'
+  - name: 'noarch'
+    url: 'http://extras.getpagespeed.com/redhat/$releasever/noarch/'
 ngx_extras_packages_RedHat:
   - 'nginx-module-headers-more'
   - 'nginx-module-nbr'

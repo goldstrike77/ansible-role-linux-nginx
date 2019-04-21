@@ -1,11 +1,11 @@
 ---
 - name: Allow NGinx service port
   firewalld:
-    port: '{{ item.value }}/tcp'
+    port: '{{ item }}/tcp'
     permanent: 'true'
     immediate: 'true'
     state: 'enabled'
-  with_dict:
+  with_items:
     - '{{ ngx_port_api }}'
     - '{{ ngx_port_exporter }}'
     - '{{ ngx_port_http }}'

@@ -60,7 +60,7 @@ ngx_arg:
   ulimit_nofile: '131088' # The number of files launched by systemd.
   ulimit_nproc: '131088' # The number of processes launched by systemd.
   user: 'nobody' # Defines user and group credentials used by worker processes.
-  worker_connections: '16384' # Sets the maximum number of simultaneous connections that can be opened by a worker process.
+  worker_connections: '20480' # The maximum number of simultaneous connections that can be opened by a worker process.
   worker_cpu_affinity: 'auto' # Binds worker processes to the sets of processor.
   worker_processes: 'auto' # Defines the number of worker processes.
 

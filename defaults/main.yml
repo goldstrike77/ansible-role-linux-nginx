@@ -109,7 +109,7 @@ ngx_HPKP: # Public Key Pinning.
   - '980Ionqp3wkYtN9SZVgMzuWQzJta1nfxNPwTem1X0uc='
 
 # Business Topology #
-ngx_site: # example only
+ngx_site: # Define backend traffic context
   - domain: 'a.example.com'
     type: 'proxy'
     location: '/'

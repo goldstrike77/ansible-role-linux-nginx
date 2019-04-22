@@ -1,22 +1,15 @@
 #
 server {
+{% for value in ngx_header %}
+  add_header {{ value }}
+{% endfor %}
+{% if ngx_allow_methods is defined %}
   add_header Access-Control-Allow-Methods '{{ ", ".join(vars["ngx_allow_methods"]) }}';
-  # Enables Content Security Policy (CSP)
-  add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.{{ item.split('.')[-2] }}.{{ item.split('.')[-1] }} *.google-analytics.com; img-src 'self' data: *.{{ item.split('.')[-2] }}.{{ item.split('.')[-1] }}; style-src 'self' 'unsafe-inline' *.{{ item.split('.')[-2] }}.{{ item.split('.')[-1] }} *.googleapis.com; font-src 'self' data: themes.googleusercontent.com fonts.gstatic.com; child-src *.{{ item.split('.')[-2] }}.{{ item.split('.')[-1] }}; object-src 'none'";
+{% endif %}
 {% if ngx_HPKP is defined %}
   # Enables Public Key Pinning Extension for HTTP (HPKP).
   add_header Public-Key-Pins 'pin-sha256="{{ "\"; pin-sha256=\"".join(vars["ngx_HPKP"]) }}"; max-age=63072000; includeSubDomains';
 {% endif %}
-  # The spec for Referrer Policy.
-  add_header Referrer-Policy "no-referrer-when-downgrade";
-  # HSTS (ngx_http_headers_module is required) (31536000 seconds = 12 months)
-  add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload;";
-  # Disable content-type sniffing on some browsers.
-  add_header X-Content-Type-Options "nosniff";
-  # Don't allow the browser to render the page inside an frame or iframe and avoid clickjacking.
-  add_header X-Frame-Options "SAMEORIGIN";
-  # Enables the Cross-site scripting (XSS) filter built into web browsers.
-  add_header X-Xss-Protection "1; mode=block";
 {% if ngx_dhparam %}
   # Diffie-Hellman parameter for DHE ciphersuites.
   ssl_dhparam             ssl/dhparam.pem;

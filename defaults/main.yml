@@ -36,6 +36,15 @@ ngx_port_exporter: '9113' # NGinx exporter listen port.
 ngx_port_http: '80' # HTTP listen port.
 ngx_port_https: '443' # HTTPs listen port.
 
+# Customer Header Variables #
+ngx_header: # Adds the specified field to a response header
+  - "Content-Security-Policy 'default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.{{ item.split('.')[-2] }}.{{ item.split('.')[-1] }} *.google-analytics.com; img-src 'self' data: *.{{ item.split('.')[-2] }}.{{ item.split('.')[-1] }}; style-src 'self' 'unsafe-inline' *.{{ item.split('.')[-2] }}.{{ item.split('.')[-1] }} *.googleapis.com; font-src 'self' data: themes.googleusercontent.com fonts.gstatic.com; child-src *.{{ item.split('.')[-2] }}.{{ item.split('.')[-1] }}; object-src 'none'';"
+  - 'Referrer-Policy "no-referrer-when-downgrade";'
+  - 'Strict-Transport-Security "max-age=31536000; includeSubDomains; preload;";'
+  - 'X-Content-Type-Options "nosniff";'
+  - 'X-Frame-Options "SAMEORIGIN";'
+  - 'X-Xss-Protection "1; mode=block";'
+
 # System Variables #
 ngx_arg:
   charset: 'utf-8' # Adds the specified charset for response header field.

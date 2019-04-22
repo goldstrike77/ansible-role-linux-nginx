@@ -29,7 +29,7 @@ ngx_port_https: '443' # HTTPs listen port.
 
 # Customer Header Variables #
 ngx_header: # Adds the specified field to a response header
-  - "Content-Security-Policy 'default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.{{ item.split('.')[-2] }}.{{ item.split('.')[-1] }} *.google-analytics.com; img-src 'self' data: *.{{ item.split('.')[-2] }}.{{ item.split('.')[-1] }}; style-src 'self' 'unsafe-inline' *.{{ item.split('.')[-2] }}.{{ item.split('.')[-1] }} *.googleapis.com; font-src 'self' data: themes.googleusercontent.com fonts.gstatic.com; child-src *.{{ item.split('.')[-2] }}.{{ item.split('.')[-1] }}; object-src 'none'';"
+  - "Content-Security-Policy \"default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.{{ item.domain.split('.')[-2] }}.{{ item.domain.split('.')[-1] }} *.google-analytics.com; img-src 'self' data: *.{{ item.domain.split('.')[-2] }}.{{ item.domain.split('.')[-1] }}; style-src 'self' 'unsafe-inline' *.{{ item.domain.split('.')[-2] }}.{{ item.domain.split('.')[-1] }} *.googleapis.com; font-src 'self' data: themes.googleusercontent.com fonts.gstatic.com; child-src *.{{ item.domain.split('.')[-2] }}.{{ item.domain.split('.')[-1] }}; object-src 'none'\";"
   - 'Referrer-Policy "no-referrer-when-downgrade";'
   - 'Strict-Transport-Security "max-age=31536000; includeSubDomains; preload;";'
   - 'X-Content-Type-Options "nosniff";'
@@ -108,4 +108,24 @@ ngx_HPKP: # Public Key Pinning.
   - 'du6FkDdMcVQ3u8prumAo6t3i3G27uMP2EOhR8R0at/U='
   - '980Ionqp3wkYtN9SZVgMzuWQzJta1nfxNPwTem1X0uc='
 
-ngx_domain_name: '["a.example.com","b.example.com"]' # Server names.
+# Business Topology #
+ngx_site: # example only
+  - domain: 'a.example.com'
+    type: 'proxy'
+    location: '/'
+    syntax:
+      - 'expires -1'
+      - 'proxy_set_header Host $http_host'
+    backend:
+      - '1.1.1.1:8080'
+      - '1.1.1.2:8080'
+  - domain: 'b.example.com'
+    type: 'fastcgi'
+    location: '/'
+    syntax:
+      - 'expires -1'
+      - 'fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name'
+      - 'include fastcgi_params'
+    backend:
+      - '1.1.1.1:8080'
+      - '1.1.1.2:8080'

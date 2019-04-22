@@ -12,13 +12,12 @@
 
 - name: Creating NGinx site folder
   file:
-    dest: '{{ ngx_site_path }}/{{ item }}'
+    dest: '{{ ngx_site_path }}/{{ item.domain }}'
     state: directory
     owner: '{{ ngx_arg.user }}'
     group: '{{ ngx_arg.user }}'
     mode: 0755
-  with_items:
-    - '{{ ngx_domain_name }}'
+  loop: '{{ ngx_site }}'
 
 - name: NGinx PKI file transfer
   copy:
@@ -45,20 +44,18 @@
 - name: NGinx site configuration file transfer
   template:
     src: 'site.conf.j2'
-    dest: '{{ ngx_conf_path }}/conf.d/{{ item }}.conf'
+    dest: '{{ ngx_conf_path }}/conf.d/{{ item.domain }}.conf'
     owner: root
     group: root
     mode: 0644
-  with_items:
-    - '{{ ngx_domain_name }}'
+  loop: '{{ ngx_site }}'
   register: site_update
 
 - name: NGinx site example file transfer
   copy:
     src: 'html/'
-    dest: '{{ ngx_site_path }}/{{ item }}'
+    dest: '{{ ngx_site_path }}/{{ item.domain }}'
     owner: '{{ ngx_arg.user }}'
     group: '{{ ngx_arg.user }}'
     mode: 0644
-  with_items:
-    - '{{ ngx_domain_name }}'
+  loop: '{{ ngx_site }}'

@@ -27,10 +27,10 @@ server {
   listen {{ ngx_port_https }} ssl http2;
   resolver {{ " ".join(vars["ngx_resolver_dns"]) }} valid=300s;
   resolver_timeout {{ ngx_resolver_timeout }};
-  server_name {{ item }};
+  server_name {{ item.domain }};
 
   charset {{ ngx_arg.charset }};
-  root {{ ngx_site_path }}/{{ item }};
+  root {{ ngx_site_path }}/{{ item.domain }};
   index index.html;
 
   access_log {{ ngx_logs_path }}/access.log main;
@@ -49,23 +49,20 @@ server {
 
   include {{ ngx_conf_path }}/security.conf;
 
-  # FastCGI Example Configuration #
-  #location ~ \.php$ {
-  #  expires -1;
-  #  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-  #  fastcgi_pass backend;
-  #  include fastcgi_params;
-  #  index index.php; 
-  #}
-
-  # Proxy Example Configuration #
-  #location ~ \.jsp$ {
-  #  expires -1;
-  #  proxy_pass backend;
-  #}
+{% if item.type is defined %}
+  location {{ item.location }} {
+  {% for value in item.syntax %}
+  {{ value }};
+  {% endfor %}
+  {{ item.type }}_pass backend;
+  }
+{% endif %}
 }
 
-# Back-end Example Configuration #
-#upstream backend {
-#  server 127.0.0.1:9000 max_fails=3 fail_timeout=20s;
-#}
+{% if item.backend is defined %}
+upstream backend {
+{% for value in item.backend %}
+  server {{ value }} max_fails=3 fail_timeout=20s;
+{% endfor %}
+}
+{% endif %}

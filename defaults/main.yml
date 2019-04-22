@@ -1,27 +1,18 @@
 ---
 # General parameters #
-ngx_acc_syslog_port: '12301' # Defines the input port of a syslog server for access log.
-ngx_block_agents: false # Enables or disables block unsafe User Agents.
-ngx_block_common_exploits: false # Enables or disables block exploits.
-ngx_block_file_inject: false # Enables or disables block file injections.
-ngx_block_spam: false # Enables or disables block spam.
-ngx_block_sql_inject: false # Enables or disables block SQL injections.
-ngx_compress: false # Enables or disables compression.
 ngx_conf_path: '/etc/nginx' # Specify the NGinx configure directory.
-ngx_dhparam: false # Enables or disables Diffie Hellman parameters.
-ngx_domain_name: '["a.example.com","b.example.com"]' # Server names.
-ngx_err_syslog_port: '12302' # Defines the input port of a syslog server for error log.
 ngx_is_install: false # A boolean value, whether install the NGinx.
-ngx_logs_path: '/data/nginx_logs' # Specify the NGinx logs directory.
-ngx_pagespeed: false # Enables or disables pagespeed modules.
 ngx_selinux: false # SELinux security policy.
 ngx_site_path: '/data/nginx_site' # Specify the NGinx site directory.
-ngx_ssl_protocols: 'intermediate' # intermediate or modern, defines SSL protocol profile.
-ngx_syslog: false # Enables or disables syslog
-ngx_syslog_server: '1.1.1.1' # Defines the address of a syslog server.
 ngx_temp_path: '/dev/shm' # Defines a directory for storing temporary files.
 ngx_version: 'standard' # extras or standard, extras includes party modules likes PageSpeed,Brotli,ModSecurity,Headers-More and much more.
-ngx_waf: false # Enables or disables ModSecurity modules.
+
+# Log Variables #
+ngx_acc_syslog_port: '12301' # Defines the input port of a syslog server for access log.
+ngx_err_syslog_port: '12302' # Defines the input port of a syslog server for error log.
+ngx_logs_path: '/data/nginx_logs' # Specify the NGinx logs directory.
+ngx_syslog: false # Enables or disables syslog
+ngx_syslog_server: '1.1.1.1' # Defines the address of a syslog server.
 
 # Service Mesh #
 environments: 'SIT' # Define the service environment.
@@ -91,7 +82,21 @@ ngx_set_real_ip_from: # Defines trusted addresses that are known to send correct
   - '192.168.0.0/24'
   - '127.0.0.1'
 
+# Security Variables #
+ngx_block_agents: false # Enables or disables block unsafe User Agents.
+ngx_block_common_exploits: false # Enables or disables block exploits.
+ngx_block_file_inject: false # Enables or disables block file injections.
+ngx_block_spam: false # Enables or disables block spam.
+ngx_block_sql_inject: false # Enables or disables block SQL injections.
+ngx_waf: false # Enables or disables ModSecurity modules.
+ngx_ssl_protocols: 'intermediate' # intermediate or modern, defines SSL protocol profile.
+
+# Performance Variables #
+ngx_compress: false # Enables or disables compression.
+ngx_pagespeed: false # Enables or disables pagespeed modules.
+
 # DH parameters #
+ngx_dhparam: false # Enables or disables Diffie Hellman parameters.
 ngx_dhparam_file: 'dhparam.pem' # Diffie Hellman key file.
 ngx_dhparam_size: '2048' # Diffie Hellman key size.
 ngx_dhparam_update: true # Enables or disables key automatic updates.
@@ -102,3 +107,5 @@ ngx_HPKP: # Public Key Pinning.
   - 'bb+uANN7nNc/j7R95lkXrwDg3d9C286sIMF8AnXuIJU='
   - 'du6FkDdMcVQ3u8prumAo6t3i3G27uMP2EOhR8R0at/U='
   - '980Ionqp3wkYtN9SZVgMzuWQzJta1nfxNPwTem1X0uc='
+
+ngx_domain_name: '["a.example.com","b.example.com"]' # Server names.

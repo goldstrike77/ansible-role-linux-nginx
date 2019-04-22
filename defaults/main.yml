@@ -116,9 +116,12 @@ ngx_site: # Define backend traffic context
     syntax:
       - 'expires -1'
       - 'proxy_set_header Host $http_host'
-    backend:
-      - '1.1.1.1:8080'
-      - '1.1.1.2:8080'
+    backend_address:
+      - '1.1.1.1'
+      - '1.1.1.2'
+    backend_port: '8080'
+    sticky: 'ip_hash'
+    keepalive: '32'
   - domain: 'b.example.com'
     type: 'fastcgi'
     location: '/'
@@ -126,6 +129,9 @@ ngx_site: # Define backend traffic context
       - 'expires -1'
       - 'fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name'
       - 'include fastcgi_params'
-    backend:
-      - '1.1.1.1:8080'
-      - '1.1.1.2:8080'
+    backend_address:
+      - '1.1.1.1'
+      - '1.1.1.2'
+    backend_port: '9000'
+    sticky: 'ip_hash'
+    keepalive: '32'

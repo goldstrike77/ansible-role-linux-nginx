@@ -22,8 +22,8 @@ server {
   ssl_stapling on;
   ssl_stapling_verify on;
   ssl_prefer_server_ciphers on;
-  ssl_protocols: {{ vars["ngx_ssl_protocols_" + ngx_ssl_protocols].protocols }};
-  ssl_ciphers: {{ vars["ngx_ssl_protocols_" + ngx_ssl_protocols].ciphers }};
+  ssl_protocols {{ vars["ngx_ssl_protocols_" + ngx_ssl_protocols].protocols }};
+  ssl_ciphers {{ vars["ngx_ssl_protocols_" + ngx_ssl_protocols].ciphers }};
   listen {{ ngx_port_https }} ssl http2;
   resolver {{ " ".join(vars["ngx_resolver_dns"]) }} valid=300s;
   resolver_timeout {{ ngx_resolver_timeout }};
@@ -48,21 +48,26 @@ server {
 {% endif %}
 
   include {{ ngx_conf_path }}/security.conf;
-
 {% if item.type is defined %}
   location {{ item.location }} {
   {% for value in item.syntax %}
   {{ value }};
   {% endfor %}
-  {{ item.type }}_pass backend;
+  {{ item.type }}_pass {% if item.type == 'proxy' %}http://{% endif %}backend;
   }
 {% endif %}
 }
 
-{% if item.backend is defined %}
+{% if item.backend_address is defined %}
 upstream backend {
-{% for value in item.backend %}
-  server {{ value }} max_fails=3 fail_timeout=20s;
+{% for value in item.backend_address %}
+  server {{ value }}:{{ item.backend_port }} max_fails=3 fail_timeout=20s;
 {% endfor %}
+{% if item.sticky is defined %}
+  {{ item.sticky }};
+{% endif %}
+{% if item.keepalive is defined %}
+  keepalive {{ item.keepalive | default('16')}};
+{% endif %}
 }
 {% endif %}

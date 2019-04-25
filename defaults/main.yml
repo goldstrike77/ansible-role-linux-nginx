@@ -89,7 +89,7 @@ ngx_block_file_inject: false # Enables or disables block file injections.
 ngx_block_spam: false # Enables or disables block spam.
 ngx_block_sql_inject: false # Enables or disables block SQL injections.
 ngx_waf: false # Enables or disables ModSecurity modules.
-ngx_ssl_protocols: 'intermediate' # intermediate or modern, defines SSL protocol profile.
+ngx_ssl_protocols: 'modern' # intermediate or modern, defines SSL protocol profile.
 
 # Performance Variables #
 ngx_compress: false # Enables or disables compression.

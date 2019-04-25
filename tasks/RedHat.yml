@@ -18,7 +18,6 @@
   yum:
     name: '{{ ",".join(vars["ngx_standard_packages_" + ansible_os_family]) }}'
     state: 'present'
-    enablerepo: '{{ ngx_repo_name }}'
     validate_certs: 'no'
     disable_gpg_check: 'yes'
 
@@ -26,7 +25,6 @@
   yum:
     name: '{{ ",".join(vars["ngx_extras_packages_" + ansible_os_family]) }}'
     state: 'present'
-    enablerepo: '{{ ngx_repo_name }}'
     validate_certs: 'no'
     disable_gpg_check: 'yes'
   when: ngx_version == 'extras'

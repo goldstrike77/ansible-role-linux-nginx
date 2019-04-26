@@ -19,6 +19,17 @@
     mode: 0755
   loop: '{{ ngx_site }}'
 
+- name: Configure kernel parameters
+  sysctl:
+    name: '{{ item.variable }}'
+    value: '{{ item.value }}'
+    state: present
+    reload: yes
+    sysctl_set: yes
+    sysctl_file: /etc/sysctl.d/20-sysctl.conf
+  with_items:
+    - '{{ ngx_kernel_parameters }}'
+
 - name: NGinx PKI file transfer
   copy:
     src: '{{ item.src }}'

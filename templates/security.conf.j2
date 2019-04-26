@@ -1,24 +1,18 @@
-{% if ngx_block_spam %}
-# Block spam #
-if ($query_string ~ "\b(ultram|unicauca|valium|viagra|vicodin|xanax|ypxaieo|erections|hoodia|huronriveracres|impotence|levitra|libido|ambien|blue\spill|cialis|cocaine|ejaculation|erectile|lipitor|phentermin|pro[sz]ac|sandyauer|tramadol|troyhamby)\b") { return 403; }
-{% endif %}
-
 {% if ngx_block_agents %}
 # Block user agents #
 if ($http_user_agent ~ "java|python|perl|ruby|curl|bash|echo|uname|base64|decode|md5sum|select|concat|httprequest|httpclient|nmap|scan|wget|libwww-perl|GetRight|GetWeb|Go!Zilla|Download Demon|Go-Ahead-Got-It|TurnitinBot|GrabNet" ) { return 403; }
 {% endif %}
 
-{% if ngx_block_common_exploits %}
+{% if ngx_block_string %}
+# Block spam #
+if ($query_string ~ "\b(ultram|unicauca|valium|viagra|vicodin|xanax|ypxaieo|erections|hoodia|huronriveracres|impotence|levitra|libido|ambien|blue\spill|cialis|cocaine|ejaculation|erectile|lipitor|phentermin|pro[sz]ac|sandyauer|tramadol|troyhamby)\b") { return 403; }
+
 # Block common exploits #
 if ($query_string ~ "(<|%3C).*script.*(>|%3E)|GLOBALS(=|\[|\%[0-9A-Z]{0,2})|_REQUEST(=|\[|\%[0-9A-Z]{0,2})|proc/self/environ|mosConfig_[a-zA-Z_]{1,21}(=|\%3D)|base64_(en|de)code\(.*\)") { return 403; }
-{% endif %}
 
-{% if ngx_block_file_inject %}
 # Block file injections #
 if ($query_string ~ "[a-zA-Z0-9_]=http://|[a-zA-Z0-9_]=(\.\.//?)+|[a-zA-Z0-9_]=/([a-z0-9_.]//?)+") { return 403; }
-{% endif %}
 
-{% if ngx_block_sql_inject %}
 # Block SQL injections #
 if ($query_string ~ "union.*select.*\(|union.*all.*select.*|concat.*\(") { return 403; }
 {% endif %}

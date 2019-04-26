@@ -84,11 +84,8 @@ ngx_set_real_ip_from: # Defines trusted addresses that are known to send correct
 
 # Security Variables #
 ngx_block_agents: false # Enables or disables block unsafe User Agents.
-ngx_block_common_exploits: false # Enables or disables block exploits.
-ngx_block_file_inject: false # Enables or disables block file injections.
-ngx_block_spam: false # Enables or disables block spam.
-ngx_block_sql_inject: false # Enables or disables block SQL injections.
-ngx_waf: false # Enables or disables ModSecurity modules.
+ngx_block_string: false # Enables or disables block includes Exploits / File injections / Spam / SQL injections.
+ngx_modsecurity: false # Enables or disables ModSecurity modules.
 ngx_ssl_protocols: 'modern' # intermediate or modern, defines SSL protocol profile.
 
 # Performance Variables #

@@ -7,16 +7,16 @@ ngx_dependent_packages_RedHat:
 
 # Standard version
 ngx_standard_repo:
-  - name: 'nginx-$basearch'
+  - name: 'nginx-basearch'
     url: 'http://nginx.org/packages/centos/$releasever/$basearch/'
 ngx_standard_packages_RedHat:
   - 'nginx'
 
 # Extras version
 ngx_extras_repo:
-  - name: 'getpagespeed-extras-$basearch'
+  - name: 'nginx-basearch'
     url: 'http://extras.getpagespeed.com/redhat/$releasever/$basearch/'
-  - name: 'getpagespeed-extras-noarch'
+  - name: 'nginx-noarch'
     url: 'http://extras.getpagespeed.com/redhat/$releasever/noarch/'
 ngx_extras_packages_RedHat:
   - 'nginx-module-headers-more'

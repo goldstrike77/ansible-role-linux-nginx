@@ -2,7 +2,7 @@
 - name: Add NGinx YUM repositories
   yum_repository:
     name: '{{ item.name }}'
-    description: '{{ ngx_repo_name }} repo'
+    description: '{{ item.name }} repo'
     file: '{{ ngx_repo_name }}'
     baseurl: '{{ item.url }}'
     gpgcheck: 'no'
@@ -18,13 +18,17 @@
   yum:
     name: '{{ ",".join(vars["ngx_standard_packages_" + ansible_os_family]) }}'
     state: 'present'
+    enablerepo: 'nginx-basearch'
     validate_certs: 'no'
+    update_cache: 'yes'  
     disable_gpg_check: 'yes'
 
 - name: Install the NGinx extras packages
   yum:
     name: '{{ ",".join(vars["ngx_extras_packages_" + ansible_os_family]) }}'
     state: 'present'
+    enablerepo: 'nginx-basearch,nginx-noarch'
     validate_certs: 'no'
+    update_cache: 'yes'
     disable_gpg_check: 'yes'
   when: ngx_version == 'extras'

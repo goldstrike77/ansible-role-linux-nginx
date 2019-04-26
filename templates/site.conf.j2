@@ -53,13 +53,13 @@ server {
   {% for value in item.syntax %}
   {{ value }};
   {% endfor %}
-  {{ item.type }}_pass {% if item.type == 'proxy' %}http://{% endif %}backend;
+  {{ item.type }}_pass {% if item.type == 'proxy' %}http://{% endif %}backend_{{ item.domain }};
   }
 {% endif %}
 }
 
 {% if item.backend_address is defined %}
-upstream backend {
+upstream backend_{{ item.domain }} {
 {% for value in item.backend_address %}
   server {{ value }}:{{ item.backend_port }} max_fails=3 fail_timeout=20s;
 {% endfor %}

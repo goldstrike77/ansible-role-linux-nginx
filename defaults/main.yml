@@ -11,7 +11,7 @@ ngx_version: 'standard' # extras or standard, extras includes party modules like
 ngx_acc_syslog_port: '12301' # Defines the input port of a syslog server for access log.
 ngx_err_syslog_port: '12302' # Defines the input port of a syslog server for error log.
 ngx_logs_path: '/data/nginx_logs' # Specify the NGinx logs directory.
-ngx_syslog: false # Enables or disables syslog
+ngx_syslog: false # Enables or disables syslog.
 ngx_syslog_server: '1.1.1.1' # Defines the address of a syslog server.
 
 # Service Mesh #
@@ -106,7 +106,7 @@ ngx_HPKP: # Public Key Pinning.
   - '980Ionqp3wkYtN9SZVgMzuWQzJta1nfxNPwTem1X0uc='
 
 # Business Topology #
-ngx_site: # Define backend traffic context
+ngx_site: # Define backend traffic context.
   - domain: 'a.example.com'
     type: 'proxy'
     location: '/'

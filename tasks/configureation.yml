@@ -49,7 +49,7 @@
     group: root
     mode: 0644
   with_items:
-    - '{{ nginx_conf_scripts }}'
+    - '{{ ngx_conf_scripts }}'
   register: conf_update
 
 - name: NGinx site configuration file transfer

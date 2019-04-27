@@ -128,6 +128,12 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 ##### Business Topology
 * `ngx_site`: Define backend traffic context.
 
+### Other parameters
+There are some variables in vars/main.yml:
+
+* `ngx_kernel_parameters`: Operating system variables.
+* `ngx_conf_scripts`: Specify the MongoDB configure and script files.
+
 ## Dependencies
 There are no dependencies on other roles.
 

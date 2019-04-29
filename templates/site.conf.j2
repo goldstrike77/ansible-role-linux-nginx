@@ -25,8 +25,10 @@ server {
   ssl_protocols {{ vars["ngx_ssl_protocols_" + ngx_ssl_protocols].protocols }};
   ssl_ciphers {{ vars["ngx_ssl_protocols_" + ngx_ssl_protocols].ciphers }};
   listen {{ ngx_port_https }} ssl http2;
+{% if ngx_resolver_dns is defined %}
   resolver {{ " ".join(vars["ngx_resolver_dns"]) }} valid=300s;
-  resolver_timeout {{ ngx_resolver_timeout }};
+  resolver_timeout {{ ngx_resolver_timeout | default('5s') }};
+{% endif %}
   server_name {{ item.domain }};
 
   charset {{ ngx_arg.charset }};

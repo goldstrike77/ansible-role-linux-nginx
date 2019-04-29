@@ -76,18 +76,10 @@ http {
                     '"request_method": "$request_method", '
                     '"host": "$host",'
                     '"remote_user": "$remote_user",'
-                    '"upstream_cache_status": "$upstream_cache_status",'
                     '"upstream_addr": "$upstream_addr",'
                     '"http_x_forwarded_for": "$http_x_forwarded_for",'
                     '"http_referrer": "$http_referer", '
-{% if ngx_site is defined and (("proxy" in ( ngx_site | json_query('[*].type') )) or ("fastcgi" in ( ngx_site | json_query('[*].type') ))) %}
-                    '"upstream_response_time": $upstream_response_time, '
-                    '"upstream_header_time": $upstream_header_time, '
-                    '"upstream_connect_time": $upstream_connect_time, '
                     '"http_user_agent": "$http_user_agent" }';
-{% else %}
-                    '"http_user_agent": "$http_user_agent" }';
-{% endif %}
 
   access_log off;
   error_log /dev/null crit;

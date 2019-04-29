@@ -65,6 +65,7 @@ http {
   log_format syslog escape=json '{ "timestamp": "$time_iso8601", '
                     '"scheme": "$scheme", '
                     '"server_port": "$server_port", '
+                    '"server_protocol": "$server_protocol", '
                     '"ssl_cipher": "$ssl_cipher", '
                     '"ssl_protocol": "$ssl_protocol", '
                     '"remote_addr": "$remote_addr", '
@@ -74,11 +75,12 @@ http {
                     '"request": "$request", '
                     '"request_method": "$request_method", '
                     '"host": "$host",'
+                    '"remote_user": "$remote_user",'
                     '"upstream_cache_status": "$upstream_cache_status",'
                     '"upstream_addr": "$upstream_addr",'
                     '"http_x_forwarded_for": "$http_x_forwarded_for",'
                     '"http_referrer": "$http_referer", '
-{% if ngx_site is defined and ("proxy" in ( ngx_site | json_query('[*].type') )) %}
+{% if ngx_site is defined and (("proxy" in ( ngx_site | json_query('[*].type') )) or ("fastcgi" in ( ngx_site | json_query('[*].type') ))) %}
                     '"upstream_response_time": $upstream_response_time, '
                     '"upstream_header_time": $upstream_header_time, '
                     '"upstream_connect_time": $upstream_connect_time, '

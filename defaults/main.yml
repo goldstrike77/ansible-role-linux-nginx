@@ -106,29 +106,29 @@ ngx_HPKP: # Public Key Pinning.
   - '980Ionqp3wkYtN9SZVgMzuWQzJta1nfxNPwTem1X0uc='
 
 # Business Topology #
-ngx_site: # Define backend traffic context.
-  - domain: 'a.example.com'
-    type: 'proxy'
-    location: '/'
-    syntax:
-      - 'expires -1'
-      - 'proxy_set_header Host $http_host'
-    backend_address:
-      - '1.1.1.1'
-      - '1.1.1.2'
-    backend_port: '8080'
-    sticky: 'ip_hash'
-    keepalive: '32'
-  - domain: 'b.example.com'
-    type: 'fastcgi'
-    location: '/'
-    syntax:
-      - 'expires -1'
-      - 'fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name'
-      - 'include fastcgi_params'
-    backend_address:
-      - '1.1.1.1'
-      - '1.1.1.2'
-    backend_port: '9000'
-    sticky: 'ip_hash'
-    keepalive: '32'
+#ngx_site: # Define backend traffic context.
+#  - domain: 'a.example.com'
+#    type: 'proxy'
+#    location: '/'
+#    syntax:
+#      - 'expires -1'
+#      - 'proxy_set_header Host $http_host'
+#    backend_address:
+#      - '1.1.1.1'
+#      - '1.1.1.2'
+#    backend_port: '8080'
+#    sticky: 'ip_hash'
+#    keepalive: '32'
+#  - domain: 'b.example.com'
+#    type: 'fastcgi'
+#    location: '/'
+#    syntax:
+#      - 'expires -1'
+#      - 'fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name'
+#      - 'include fastcgi_params'
+#    backend_address:
+#      - '1.1.1.1'
+#      - '1.1.1.2'
+#    backend_port: '9000'
+#    sticky: 'ip_hash'
+#    keepalive: '32'

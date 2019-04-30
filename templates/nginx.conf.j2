@@ -60,6 +60,27 @@ http {
   open_log_file_cache max=1000 inactive=60s;
   map $upstream_connect_time  $map_upstream_connect_time  { default $upstream_connect_time;  "" 0; }
   map $upstream_response_time $map_upstream_response_time { default $upstream_response_time; "" 0; }
+  log_format main   '[$time_local] '
+                    '"$remote_addr" '
+                    '"$http_x_forwarded_for" '
+                    '$body_bytes_sent '
+                    '$connection_requests '
+                    '"$host" '
+                    '"$http_referer" '
+                    '"$http_user_agent" '
+                    '"$request" '
+                    '$request_length '
+                    '"$request_method" '
+                    '$request_time '
+                    '$status '
+                    '"$scheme" '
+                    '"$server_port" '
+                    '"$server_protocol" '
+                    '"$ssl_cipher" '
+                    '"$ssl_protocol" '
+                    '"$upstream_addr" '
+                    '$map_upstream_connect_time '
+                    '$map_upstream_response_time';
   log_format syslog escape=json '{ "timestamp": "$time_iso8601", '
                     '"body_bytes_sent": $body_bytes_sent, '
                     '"connection_requests": $connection_requests, '

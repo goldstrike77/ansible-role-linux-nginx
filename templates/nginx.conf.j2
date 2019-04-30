@@ -58,28 +58,29 @@ http {
   real_ip_header {{ ngx_arg.real_ip_header }};
   real_ip_recursive on;
   open_log_file_cache max=1000 inactive=60s;
-  log_format main   '$remote_addr - $remote_user [$time_local] "$request" '
-                    '$status $body_bytes_sent "$http_referer" '
-                    '"$http_user_agent" '
-                    '$request_time $bytes_sent $request_length';
+  map $upstream_connect_time  $map_upstream_connect_time  { default $upstream_connect_time;  "" 0; }
+  map $upstream_response_time $map_upstream_response_time { default $upstream_response_time; "" 0; }
   log_format syslog escape=json '{ "timestamp": "$time_iso8601", '
+                    '"body_bytes_sent": $body_bytes_sent, '
+                    '"connection_requests": $connection_requests, '
+                    '"host": "$host", '
+                    '"http_referrer": "$http_referer", '
+                    '"http_user_agent": "$http_user_agent", '
+                    '"http_x_forwarded_for": "$http_x_forwarded_for", ' 
+                    '"remote_addr": "$remote_addr", '
+                    '"request": "$request", '
+                    '"request_length": $request_length, '
+                    '"request_method": "$request_method", '
+                    '"request_time": $request_time, '
+                    '"response_status": $status, '
                     '"scheme": "$scheme", '
                     '"server_port": "$server_port", '
                     '"server_protocol": "$server_protocol", '
                     '"ssl_cipher": "$ssl_cipher", '
                     '"ssl_protocol": "$ssl_protocol", '
-                    '"remote_addr": "$remote_addr", '
-                    '"body_bytes_sent": $body_bytes_sent, '
-                    '"request_time": $request_time, '
-                    '"response_status": $status, '
-                    '"request": "$request", '
-                    '"request_method": "$request_method", '
-                    '"host": "$host",'
-                    '"remote_user": "$remote_user",'
-                    '"upstream_addr": "$upstream_addr",'
-                    '"http_x_forwarded_for": "$http_x_forwarded_for",'
-                    '"http_referrer": "$http_referer", '
-                    '"http_user_agent": "$http_user_agent" }';
+                    '"upstream_addr": "$upstream_addr", '
+                    '"upstream_connect_time": $map_upstream_connect_time, '
+                    '"upstream_response_time": $map_upstream_response_time }';
 
   access_log off;
   error_log /dev/null crit;

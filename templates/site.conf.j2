@@ -35,7 +35,7 @@ server {
   root {{ ngx_site_path }}/{{ item.domain }};
   index index.html;
 
-  access_log {{ ngx_logs_path }}/access.log main;
+  access_log {{ ngx_logs_path }}/access.log syslog;
   error_log {{ ngx_logs_path }}/error.log notice;
 {% if ngx_syslog %}
   access_log syslog:server={{ ngx_syslog_server }}:{{ ngx_acc_syslog_port }} syslog;

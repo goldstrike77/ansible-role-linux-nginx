@@ -62,14 +62,14 @@ server {
 
 {% if item.backend_address is defined %}
 upstream backend_{{ item.domain }} {
-{% for value in item.backend_address %}
-  server {{ value }}:{{ item.backend_port }} max_fails=3 fail_timeout=20s;
-{% endfor %}
 {% if item.sticky is defined %}
   {{ item.sticky }};
 {% endif %}
 {% if item.keepalive is defined %}
   keepalive {{ item.keepalive | default('16')}};
 {% endif %}
+{% for value in item.backend_address %}
+  server {{ value }}:{{ item.backend_port }} max_fails=3 fail_timeout=20s;
+{% endfor %}
 }
 {% endif %}

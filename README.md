@@ -55,11 +55,11 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `ngx_syslog_server`: Defines the address of a syslog server.
 
 ##### Service Mesh
-* `environments`: Define the object environment.
-* `consul_is_register`: Whether register a client service with consul.
-* `consul_exporter_token`: Consul client ACL token.
-* `consul_clients`: List of consul clients.
-* `consul_http_port`: The consul HTTP API port.
+* `environments`: Define the service environment.
+* `consul_public_register`: Whether register a exporter service with public consul client.
+* `consul_public_exporter_token`: Public Consul client ACL token.
+* `consul_public_clients`: List of public consul clients.
+* `consul_public_http_port`: The consul HTTP API port.
 
 ##### Listen port
 * `ngx_port_api`: Status listen port.
@@ -160,11 +160,6 @@ You can also use the group_vars or the host_vars files for setting the variables
     ngx_logs_path: '/data/nginx_logs'
     ngx_syslog: false
     ngx_syslog_server: '1.1.1.1'
-    environments: 'SIT'
-    consul_is_register: false
-    consul_exporter_token: '00000000-0000-0000-0000-000000000000'
-    consul_clients: 'localhost'
-    consul_http_port: '8500'
     ngx_port_api: '10088'
     ngx_port_exporter: '9113'
     ngx_port_http: '80'
@@ -241,6 +236,11 @@ You can also use the group_vars or the host_vars files for setting the variables
         backend_port: '8080'
         sticky: 'ip_hash'
         keepalive: '32'
+    environments: 'SIT'
+    consul_public_register: false
+    consul_public_exporter_token: '00000000-0000-0000-0000-000000000000'
+    consul_public_clients: 'localhost'
+    consul_public_http_port: '8500'
 
 ## License
 ![](https://img.shields.io/badge/MIT-purple.svg?style=for-the-badge)

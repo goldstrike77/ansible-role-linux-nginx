@@ -22,10 +22,10 @@ ngx_kernel_parameters:
   - { variable: 'kernel.msgmax', value: '65536' }
   - { variable: 'kernel.msgmnb', value: '65536' }
   - { variable: 'kernel.pid_max', value: '65536' }  
-  - { variable: 'net.core.rmem_default', value: '31457280' }
-  - { variable: 'net.core.rmem_max', value: '12582912' }
-  - { variable: 'net.core.wmem_default', value: '31457280' }
-  - { variable: 'net.core.wmem_max', value: '12582912' }
+  - { variable: 'net.core.rmem_default', value: '2097152' }
+  - { variable: 'net.core.rmem_max', value: '2097152' }
+  - { variable: 'net.core.wmem_default', value: '2097152' }
+  - { variable: 'net.core.wmem_max', value: '2097152' }
   - { variable: 'net.core.somaxconn', value: '262144' }
   - { variable: 'net.core.netdev_max_backlog', value: '262144' }
   - { variable: 'net.core.optmem_max', value: '25165824' }

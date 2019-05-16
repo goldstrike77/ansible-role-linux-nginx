@@ -75,3 +75,4 @@
     mode: 0644
   loop: '{{ ngx_site }}'
   when: ngx_site is defined
+  no_log: true

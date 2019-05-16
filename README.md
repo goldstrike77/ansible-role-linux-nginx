@@ -222,11 +222,13 @@ You can also use the group_vars or the host_vars files for setting the variables
       - '980Ionqp3wkYtN9SZVgMzuWQzJta1nfxNPwTem1X0uc='
     ngx_site:
       - domain: 'a.example.com'
-        type: 'proxy'
-        location: '/'
         syntax:
-          - 'expires -1'
-          - 'proxy_set_header Host $http_host'
+          - 'location /api {'
+          - '  expires off;'
+          - '  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name'
+          - '  include fastcgi_params'
+          - '  fastcgi_pass http://backend;'
+          - '}
         backend_address:
           - '1.1.1.1'
           - '1.1.1.2'

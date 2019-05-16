@@ -40,7 +40,6 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 
 ##### General parameters
 * `ngx_conf_path`: Specify the NGinx configure directory.
-* `ngx_is_install`: A boolean value, whether install the NGinx.
 * `ngx_selinux`: SELinux security policy.
 * `ngx_site_path`: Specify the NGinx site directory.
 * `ngx_temp_path`: Defines a directory for storing temporary files.

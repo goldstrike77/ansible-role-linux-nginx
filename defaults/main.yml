@@ -108,11 +108,16 @@ ngx_dhparam_update_interval: 'monthly' # Key renewal period.
 # Business Topology #
 #ngx_site: # Define backend traffic context.
 #  - domain: 'a.example.com'
-#    type: 'proxy'
-#    location: '/'
 #    syntax:
-#      - 'expires -1'
-#      - 'proxy_set_header Host $http_host'
+#      - 'location /api { try_files $uri @api; }'
+#      - 'location @api {'
+#      - '  expires off;'
+#      - '  proxy_buffering off;'
+#      - '  proxy_set_header Host $http_host;'
+#      - '  proxy_set_header X-Real-IP $remote_addr;'
+#      - '  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;'
+#      - '  proxy_pass http://backend;'
+#      - '}'
 #    backend_address:
 #      - '1.1.1.1'
 #      - '1.1.1.2'
@@ -120,12 +125,13 @@ ngx_dhparam_update_interval: 'monthly' # Key renewal period.
 #    sticky: 'ip_hash'
 #    keepalive: '32'
 #  - domain: 'b.example.com'
-#    type: 'fastcgi'
-#    location: '/'
 #    syntax:
-#      - 'expires -1'
-#      - 'fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name'
-#      - 'include fastcgi_params'
+#      - 'location /api {'
+#      - '  expires off;'
+#      - '  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name'
+#      - '  include fastcgi_params'
+#      - '  fastcgi_pass http://backend;'
+#      - '}'
 #    backend_address:
 #      - '1.1.1.1'
 #      - '1.1.1.2'

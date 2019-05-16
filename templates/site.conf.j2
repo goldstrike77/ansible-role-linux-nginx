@@ -50,18 +50,15 @@ server {
 {% endif %}
 
   include {{ ngx_conf_path }}/security.conf;
-{% if item.type is defined %}
-  location {{ item.location }} {
-  {% for value in item.syntax %}
-  {{ value }};
-  {% endfor %}
-  {{ item.type }}_pass {% if item.type == 'proxy' %}http://{% endif %}backend_{{ item.domain }};
-  }
+{% if item.syntax is defined %}
+{% for value in item.syntax %}
+  {{ value }}
+{% endfor %}
 {% endif %}
 }
 
 {% if item.backend_address is defined %}
-upstream backend_{{ item.domain }} {
+upstream backend {
 {% if item.sticky is defined %}
   {{ item.sticky }};
 {% endif %}

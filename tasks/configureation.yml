@@ -19,6 +19,7 @@
     mode: 0755
   loop: '{{ ngx_site }}'
   when: ngx_site is defined
+  no_log: true
 
 - name: Configure kernel parameters
   sysctl:
@@ -63,6 +64,7 @@
   loop: '{{ ngx_site }}'
   register: site_update
   when: ngx_site is defined
+  no_log: true
 
 - name: NGinx site example file transfer
   copy:

@@ -148,7 +148,6 @@ Including an example of how to use your role (for instance, with variables passe
 You can also use the group_vars or the host_vars files for setting the variables needed for this role. File you should change: group_vars/all or host_vars/`group_name`
 
     ngx_conf_path: '/etc/nginx'
-    ngx_is_install: false
     ngx_selinux: false
     ngx_site_path: '/data/nginx_site'
     ngx_temp_path: '/dev/shm'

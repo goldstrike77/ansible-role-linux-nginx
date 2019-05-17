@@ -39,11 +39,23 @@ This role will work on the following operating systems:
 There are some variables in defaults/main.yml which can (Or needs to) be overridden:
 
 ##### General parameters
-* `ngx_conf_path`: Specify the NGinx configure directory.
+* `ngx_version`: extras or standard, extras includes party modules likes PageSpeed,Brotli,ModSecurity,Headers-More and much more.
 * `ngx_selinux`: SELinux security policy.
 * `ngx_site_path`: Specify the NGinx site directory.
+* `ngx_client_body_timeout`: Defines a timeout for reading client request body.
+* `ngx_client_max_body_size`: The maximum allowed size of the client request body.
+* `ngx_conf_path`: Specify the NGinx configure directory.
+* `ngx_expires`: "Cache-Control" response header fields.
+* `ngx_fastcgi_read_timeout`: Defines a timeout for reading a response from the FastCGI server.
+* `ngx_keepalive_requests`: The maximum number of requests that can be served through one keep-alive connection.
+* `ngx_keepalive_timeout`: Sets a timeout during which a keep-alive client connection will stay open on the server side.
+* `ngx_proxy_connect_timeout`: Defines a timeout for establishing a connection with a proxied server.
+* `ngx_proxy_read_timeout`: Defines a timeout for reading a response from the proxied server.
+* `ngx_proxy_send_timeout`: Sets a timeout for transmitting a request to the proxied server.
+* `ngx_real_ip_header`: Defines the request header field whose value will be used to replace the client address.
+* `ngx_send_timeout`: Sets a timeout for transmitting a response to the client.
 * `ngx_temp_path`: Defines a directory for storing temporary files.
-* `ngx_version`: extras or standard, extras includes party modules likes PageSpeed,Brotli,ModSecurity,Headers-More and much more.
+* `ngx_worker_connections`: The maximum number of simultaneous connections that can be opened by a worker process.
 
 ##### Log Variables
 * `ngx_acc_syslog_port`: Defines the input port of a syslog server for access log.
@@ -70,25 +82,13 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 
 ##### System Variables
 * `ngx_arg.charset`: Adds the specified charset for response header field.
-* `ngx_arg.client_body_timeout`: Defines a timeout for reading client request body.
-* `ngx_arg.client_max_body_size`: The maximum allowed size of the client request body.
 * `ngx_arg.etag`: Enables or disables the "ETag" response header field for static resources.
-* `ngx_arg.expires`: Cache-Control response header fields.
-* `ngx_arg.fastcgi_read_timeout`: Defines a timeout for reading a response from the FastCGI server.
-* `ngx_arg.keepalive_requests`: The maximum number of requests that can be served through one keep-alive connection.
-* `ngx_arg.keepalive_timeout`: Sets a timeout during which a keep-alive client connection will stay open on the server side.
-* `ngx_arg.proxy_connect_timeout`: Defines a timeout for establishing a connection with a proxied server.
-* `ngx_arg.proxy_read_timeout`: Defines a timeout for reading a response from the proxied server.
-* `ngx_arg.proxy_send_timeout`: Sets a timeout for transmitting a request to the proxied server.
-* `ngx_arg.real_ip_header`: Defines the request header field whose value will be used to replace the client address.
-* `ngx_arg.send_timeout`: Sets a timeout for transmitting a response to the client.
 * `ngx_arg.server_tokens`: Enables or disables nginx version on "Server" response header field.
 * `ngx_arg.tcp_nodelay`: Enables or disables the use of the TCP_NODELAY option.
 * `ngx_arg.tcp_nopush`: Enables or disables the use of the TCP_NOPUSH socket option.
 * `ngx_arg.ulimit_nofile`: The number of files launched by systemd.
 * `ngx_arg.ulimit_nproc`: The number of processes launched by systemd.
 * `ngx_arg.user`: Defines user and group credentials used by worker processes.
-* `ngx_arg.worker_connections`: The maximum number of simultaneous connections that can be opened by a worker process.
 * `ngx_arg.worker_cpu_affinity`: Binds worker processes to the sets of processor.
 * `ngx_arg.worker_processes`: Defines the number of worker processes.
 
@@ -122,7 +122,6 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 ##### HTTP Public Key Pinning Extension
 * `ngx_HPKP`: Public Key Pinning.
 
-
 ##### Business Topology
 * `ngx_site`: Define backend traffic context.
 
@@ -147,11 +146,23 @@ Including an example of how to use your role (for instance, with variables passe
 ### Combination of group vars and playbook
 You can also use the group_vars or the host_vars files for setting the variables needed for this role. File you should change: group_vars/all or host_vars/`group_name`
 
-    ngx_conf_path: '/etc/nginx'
+    ngx_version: 'standard'
     ngx_selinux: false
     ngx_site_path: '/data/nginx_site'
+    ngx_client_body_timeout: '10'
+    ngx_client_max_body_size: '2m'
+    ngx_conf_path: '/etc/nginx'
+    ngx_expires: 'max'
+    ngx_fastcgi_read_timeout: '60'
+    ngx_keepalive_requests: '5000'
+    ngx_keepalive_timeout: '15'
+    ngx_proxy_connect_timeout: '20'
+    ngx_proxy_read_timeout: '20'
+    ngx_proxy_send_timeout: '20'
+    ngx_real_ip_header: 'X-Forwarded-For'
+    ngx_send_timeout: '30'
     ngx_temp_path: '/dev/shm'
-    ngx_version: 'standard'
+    ngx_worker_connections: '20480'
     ngx_acc_syslog_port: '12301'
     ngx_err_syslog_port: '12302'
     ngx_logs_path: '/data/nginx_logs'
@@ -169,25 +180,13 @@ You can also use the group_vars or the host_vars files for setting the variables
       - 'X-Xss-Protection "1; mode=block";'
     ngx_arg:
       charset: 'utf-8'
-      client_body_timeout: '10'
-      client_max_body_size: '2m'
       etag: 'off'
-      expires: 'max'
-      fastcgi_read_timeout: '60'
-      keepalive_requests: '5000'
-      keepalive_timeout: '15'
-      proxy_connect_timeout: '20'
-      proxy_read_timeout: '20'
-      proxy_send_timeout: '20'
-      real_ip_header: 'X-Forwarded-For'
-      send_timeout: '30'
       server_tokens: 'off'
       tcp_nodelay: 'on'
       tcp_nopush: 'on'
       ulimit_nofile: '131088'
       ulimit_nproc: '131088'
       user: 'nobody'
-      worker_connections: '20480'
       worker_cpu_affinity: 'auto'
       worker_processes: 'auto'
     ngx_allow_methods:

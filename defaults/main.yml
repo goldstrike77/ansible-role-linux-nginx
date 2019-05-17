@@ -1,11 +1,23 @@
 ---
 # General parameters #
-ngx_conf_path: '/etc/nginx' # Specify the NGinx configure directory.
 ngx_is_install: false # A boolean value, whether install the NGinx.
+ngx_version: 'standard' # extras or standard, extras includes party modules likes PageSpeed,Brotli,ModSecurity,Headers-More and much more.
 ngx_selinux: false # SELinux security policy.
 ngx_site_path: '/data/nginx_site' # Specify the NGinx site directory.
+ngx_client_body_timeout: '10' # Defines a timeout for reading client request body.
+ngx_client_max_body_size: '2m' # The maximum allowed size of the client request body.
+ngx_conf_path: '/etc/nginx' # Specify the NGinx configure directory.
+ngx_expires: 'max' # "Cache-Control" response header fields.
+ngx_fastcgi_read_timeout: '60' # Defines a timeout for reading a response from the FastCGI server.
+ngx_keepalive_requests: '5000' # The maximum number of requests that can be served through one keep-alive connection.
+ngx_keepalive_timeout: '15' # Sets a timeout during which a keep-alive client connection will stay open on the server side.
+ngx_proxy_connect_timeout: '20' # Defines a timeout for establishing a connection with a proxied server.
+ngx_proxy_read_timeout: '20' # Defines a timeout for reading a response from the proxied server.
+ngx_proxy_send_timeout: '20' # Sets a timeout for transmitting a request to the proxied server.
+ngx_real_ip_header: 'X-Forwarded-For' # Defines the request header field whose value will be used to replace the client address.
+ngx_send_timeout: '30' # Sets a timeout for transmitting a response to the client.
 ngx_temp_path: '/dev/shm' # Defines a directory for storing temporary files.
-ngx_version: 'standard' # extras or standard, extras includes party modules likes PageSpeed,Brotli,ModSecurity,Headers-More and much more.
+ngx_worker_connections: '20480' # The maximum number of simultaneous connections that can be opened by a worker process.
 
 # Log Variables #
 ngx_acc_syslog_port: '12301' # Defines the input port of a syslog server for access log.
@@ -39,25 +51,13 @@ ngx_header: # Adds the specified field to a response header
 # System Variables #
 ngx_arg:
   charset: 'utf-8' # Adds the specified charset for response header field.
-  client_body_timeout: '10' # Defines a timeout for reading client request body.
-  client_max_body_size: '2m' # The maximum allowed size of the client request body.
   etag: 'off' # Enables or disables the "ETag" response header field for static resources.
-  expires: 'max' # "Cache-Control" response header fields.
-  fastcgi_read_timeout: '60' # Defines a timeout for reading a response from the FastCGI server.
-  keepalive_requests: '5000' # The maximum number of requests that can be served through one keep-alive connection.
-  keepalive_timeout: '15' # Sets a timeout during which a keep-alive client connection will stay open on the server side.
-  proxy_connect_timeout: '20' # Defines a timeout for establishing a connection with a proxied server.
-  proxy_read_timeout: '20' # Defines a timeout for reading a response from the proxied server.
-  proxy_send_timeout: '20' # Sets a timeout for transmitting a request to the proxied server.
-  real_ip_header: 'X-Forwarded-For' # Defines the request header field whose value will be used to replace the client address.
-  send_timeout: '30' # Sets a timeout for transmitting a response to the client.
   server_tokens: 'off' # Enables or disables nginx version on "Server" response header field.
   tcp_nodelay: 'on' # Enables or disables the use of the TCP_NODELAY option.
   tcp_nopush: 'on' # Enables or disables the use of the TCP_NOPUSH socket option.
   ulimit_nofile: '131088' # The number of files launched by systemd.
   ulimit_nproc: '131088' # The number of processes launched by systemd.
   user: 'nobody' # Defines user and group credentials used by worker processes.
-  worker_connections: '20480' # The maximum number of simultaneous connections that can be opened by a worker process.
   worker_cpu_affinity: 'auto' # Binds worker processes to the sets of processor.
   worker_processes: 'auto' # Defines the number of worker processes.
 

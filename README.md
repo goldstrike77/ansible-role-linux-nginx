@@ -12,7 +12,6 @@ __Table of Contents__
 - [Overview](#overview)
 - [Requirements](#requirements)
   * [Operating systems](#operating-systems)
-  * [NGinx Versions](#NGinx-versions)
 - [ Role variables](#Role-variables)
   * [Main Configuration](#Main-parameters)
   * [Other Configuration](#Other-parameters)
@@ -129,7 +128,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 There are some variables in vars/main.yml:
 
 * `ngx_kernel_parameters`: Operating system variables.
-* `ngx_conf_scripts`: Specify the MongoDB configure and script files.
+* `ngx_conf_scripts`: Specify the NGinx configure and script files.
 
 ## Dependencies
 There are no dependencies on other roles.

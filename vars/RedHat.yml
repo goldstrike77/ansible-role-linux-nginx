@@ -15,9 +15,9 @@ ngx_standard_packages_RedHat:
 # Extras version
 ngx_extras_repo:
   - name: 'nginx-basearch'
-    url: 'http://extras.getpagespeed.com/redhat/$releasever/$basearch/'
+    url: 'http://cache.omygods.com/getpagespeed/redhat/$releasever/$basearch/'
   - name: 'nginx-noarch'
-    url: 'http://extras.getpagespeed.com/redhat/$releasever/noarch/'
+    url: 'http://cache.omygods.com/getpagespeed/redhat/$releasever/noarch/'
 ngx_extras_packages_RedHat:
   - 'nginx-module-headers-more'
   - 'nginx-module-nbr'

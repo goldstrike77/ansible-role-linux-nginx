@@ -13,6 +13,8 @@
   yum:
     name: '{{ ",".join(vars["ngx_dependent_packages_" + ansible_os_family]) }}'
     state: 'present'
+    validate_certs: 'no'
+    disable_gpg_check: 'yes'
 
 - name: Install the NGinx packages
   yum:

@@ -21,7 +21,7 @@
 - name: Reload the service
   shell: echo ''
   notify: 'Reloading the Nginx service'
-  when: pki_update is changed or conf_update is changed or site_update is changed
+  when: pki_update is changed or conf_update is changed or site_update is changed or effects_update is changed
 
 - name: Force the handler to run immediately
   meta: flush_handlers

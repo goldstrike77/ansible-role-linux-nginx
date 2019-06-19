@@ -99,6 +99,10 @@ ngx_dhparam_size: '2048' # Diffie Hellman key size.
 ngx_dhparam_update: true # Enables or disables key automatic updates.
 ngx_dhparam_update_interval: 'monthly' # Key renewal period.
 
+# Special effects #
+#ngx_config_effects:
+#  - 'gray'
+
 # HTTP Public Key Pinning Extension #
 #ngx_HPKP: # Public Key Pinning.
 #  - 'bb+uANN7nNc/j7R95lkXrwDg3d9C286sIMF8AnXuIJU='

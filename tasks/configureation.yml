@@ -66,6 +66,17 @@
   when: ngx_site is defined
   no_log: true
 
+- name: NGinx special effects configuration file transfer
+  copy:
+    src: 'conf/{{ item }}.conf'
+    dest: '{{ ngx_conf_path }}/conf.d/{{ item }}.conf'
+    owner: root
+    group: root
+    mode: 0644
+  loop: '{{ ngx_config_effects }}'
+  register: effects_update
+  when: ngx_config_effects is defined
+
 - name: NGinx site example file transfer
   copy:
     src: 'html/'

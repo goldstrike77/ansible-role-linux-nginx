@@ -78,7 +78,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `ngx_port_https`: HTTPs listen port.
 
 ##### Customer Header Variables
-* `ngx_header`: Adds the specified field to a response header
+* `ngx_header`: Adds the specified field to a response header.
 
 ##### System Variables
 * `ngx_arg.charset`: Adds the specified charset for response header field.
@@ -220,18 +220,19 @@ You can also use the group_vars or the host_vars files for setting the variables
       - 'du6FkDdMcVQ3u8prumAo6t3i3G27uMP2EOhR8R0at/U='
       - '980Ionqp3wkYtN9SZVgMzuWQzJta1nfxNPwTem1X0uc='
     ngx_site:
-      - domain: 'a.example.com'
+      - domain: 'b.example.com'
         syntax:
-          - 'location /api {'
+          - 'location ~* \.php$ {'
           - '  expires off;'
-          - '  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name'
-          - '  include fastcgi_params'
-          - '  fastcgi_pass http://backend;'
-          - '}
+          - '  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;'
+          - '  fastcgi_param SCRIPT_NAME $fastcgi_script_name;'
+          - '  include fastcgi_params;'
+          - '  fastcgi_pass backend;'
+          - '}'
         backend_address:
           - '1.1.1.1'
           - '1.1.1.2'
-        backend_port: '8080'
+        backend_port: '9000'
         sticky: 'ip_hash'
         keepalive: '32'
     environments: 'SIT'

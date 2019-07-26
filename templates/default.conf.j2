@@ -6,6 +6,7 @@ server {
   return 301 https://$host$request_uri;
 }
 
+{% if exporter_is_install %}
 server {
   listen 127.0.0.1:{{ ngx_port_api }};
   server_name _;
@@ -16,3 +17,4 @@ server {
     deny all;
   }
 }
+{% endif %}

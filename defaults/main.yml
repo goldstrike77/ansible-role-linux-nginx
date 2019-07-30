@@ -24,7 +24,8 @@ ngx_acc_syslog_port: '12301' # Defines the input port of a syslog server for acc
 ngx_err_syslog_port: '12302' # Defines the input port of a syslog server for error log.
 ngx_logs_path: '/data/nginx_logs' # Specify the NGinx logs directory.
 ngx_syslog: false # Enables or disables syslog.
-ngx_syslog_server: '1.1.1.1' # Defines the address of a syslog server.
+ngx_syslog_server: # Defines the address list of a syslog server.
+  - '127.0.0.1'
 
 # Service Mesh #
 environments: 'SIT' # Define the service environment.

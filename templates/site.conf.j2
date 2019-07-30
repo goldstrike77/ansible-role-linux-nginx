@@ -38,8 +38,8 @@ server {
   access_log {{ ngx_logs_path }}/access.log main;
   error_log {{ ngx_logs_path }}/error.log notice;
 {% if ngx_syslog %}
-  access_log syslog:server={{ ngx_syslog_server }}:{{ ngx_acc_syslog_port }} syslog;
-  error_log syslog:server={{ ngx_syslog_server }}:{{ ngx_err_syslog_port }};
+  access_log syslog:server={{ ngx_syslog_server | list | random }}:{{ ngx_acc_syslog_port }} syslog;
+  error_log syslog:server={{ ngx_syslog_server | list | random }}:{{ ngx_err_syslog_port }};
 {% endif %}
   
   location = /favicon.ico { access_log off; log_not_found off; }

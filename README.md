@@ -61,7 +61,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `ngx_err_syslog_port`: Defines the input port of a syslog server for error log.
 * `ngx_logs_path`: Specify the NGinx logs directory.
 * `ngx_syslog`: Enables or disables syslog.
-* `ngx_syslog_server`: Defines the address of a syslog server.
+* `ngx_syslog_server`: # Defines the address list of a syslog server.
 
 ##### Service Mesh
 * `environments`: Define the service environment.
@@ -167,7 +167,8 @@ You can also use the group_vars or the host_vars files for setting the variables
     ngx_err_syslog_port: '12302'
     ngx_logs_path: '/data/nginx_logs'
     ngx_syslog: false
-    ngx_syslog_server: '1.1.1.1'
+    ngx_syslog_server:
+      - '127.0.0.1'
     ngx_port_api: '10088'
     ngx_port_exporter: '9113'
     ngx_port_http: '80'

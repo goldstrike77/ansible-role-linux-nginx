@@ -18,6 +18,10 @@
     state: 'present'
     validate_certs: 'no'
     disable_gpg_check: 'yes'
+  register: yum_status
+  until: yum_status is succeeded
+  retries: 3
+  delay: 5
 
 - name: Install the NGinx packages
   yum:
@@ -27,6 +31,10 @@
     validate_certs: 'no'
     update_cache: 'yes'  
     disable_gpg_check: 'yes'
+  register: yum_status
+  until: yum_status is succeeded
+  retries: 3
+  delay: 5
 
 - name: Install the NGinx extras packages
   yum:
@@ -37,3 +45,7 @@
     update_cache: 'yes'
     disable_gpg_check: 'yes'
   when: ngx_version == 'extras'
+  register: yum_status
+  until: yum_status is succeeded
+  retries: 3
+  delay: 5

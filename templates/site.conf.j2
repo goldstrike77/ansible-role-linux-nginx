@@ -58,7 +58,7 @@ server {
 }
 
 {% if item.backend_address is defined %}
-upstream backend {
+upstream backend_{{ item.domain }} {
 {% if item.sticky is defined %}
   {{ item.sticky }};
 {% endif %}

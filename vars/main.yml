@@ -26,7 +26,7 @@ ngx_kernel_parameters:
   - { variable: 'net.core.rmem_max', value: '2097152' }
   - { variable: 'net.core.wmem_default', value: '2097152' }
   - { variable: 'net.core.wmem_max', value: '2097152' }
-  - { variable: 'net.core.somaxconn', value: '262144' }
+  - { variable: 'net.core.somaxconn', value: '65535' }
   - { variable: 'net.core.netdev_max_backlog', value: '262144' }
   - { variable: 'net.core.optmem_max', value: '25165824' }
   - { variable: 'net.ipv4.tcp_rmem', value: '8192 87380 16777216' }

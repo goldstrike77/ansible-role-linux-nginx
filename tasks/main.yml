@@ -10,7 +10,7 @@
 
 - name: Generate strong Diffie–Hellman key exchange
   include: 'dhparam.yml'
-  when: ngx_dhparam
+  when: ngx_dhparam | bool
 
 - name: Configuration the NGinx
   include: 'configureation.yml'

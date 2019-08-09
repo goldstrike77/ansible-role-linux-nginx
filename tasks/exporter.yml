@@ -10,12 +10,10 @@
 
 - name: Install the Prometheus NGinx exporter packages
   yum:
-    name: '{{ item }}'
+    name: '{{ ngx_exporter_software }}'
     state: 'present'
     validate_certs: 'no'
     disable_gpg_check: 'yes'
-  with_items:
-    - '{{ ngx_exporter_software }}'
 
 - name: Configures the time to sleep before restarting a NGinx exporter service
   lineinfile:

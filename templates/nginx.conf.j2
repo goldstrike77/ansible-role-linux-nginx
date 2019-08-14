@@ -82,6 +82,8 @@ http {
                     '$map_upstream_connect_time '
                     '$map_upstream_response_time';
   log_format syslog escape=json '{ "timestamp": "$time_iso8601", '
+                    '"enviornment": "{{ environments | default("ENV") | upper }}", '
+                    '"group": "{{ group_names[0] | default("GROUP") | upper }}", '
                     '"body_bytes_sent": $body_bytes_sent, '
                     '"connection_requests": $connection_requests, '
                     '"host": "$host", '

@@ -79,12 +79,14 @@ ngx_allow_methods: # Define allowable HTTP methods.
 
 # Internal network segment #
 ngx_set_real_ip_from: # Defines trusted addresses that are known to send correct replacement addresses.
-  - '10.0.0.0/8'
-  - '100.64.0.0/10'
-  - '127.0.0.0/8'
-  - '169.254.0.0/16'
-  - '172.16.0.0/12'
-  - '192.168.0.0/16'
+  - '10.0.0.0/8' # Private network
+  - '100.64.0.0/10' # Carrier-grade NAT
+  - '127.0.0.0/8' # Loopback addresses
+  - '169.254.0.0/16' # Link-local addresses
+  - '172.16.0.0/12' # Private network
+  - '192.0.0.0/24' # Private network
+  - '192.168.0.0/16' # Private network
+  - '198.18.0.0/15' # Private network
 
 # Security Variables #
 ngx_block_agents: false # Enables or disables block unsafe User Agents.

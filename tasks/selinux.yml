@@ -20,17 +20,17 @@
 - name: "Allow NGinx to start (SELinux)"
   selinux_permissive:
     name: 'httpd_t'
-    permissive: true
-  become: yes
+    permissive: 'true'
+  become: 'yes'
   async: 35
   poll: 0
   when:
-    - ngx_selinux
+    - ngx_selinux | bool
 
 - name: Allow NGinx to set rlimit
   seboolean:
     name: 'httpd_setrlimit'
-    state: yes
-    persistent: yes
+    state: 'yes'
+    persistent: 'yes'
   when:
-    - ngx_selinux
+    - ngx_selinux | bool

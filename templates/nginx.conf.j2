@@ -84,6 +84,8 @@ http {
   log_format syslog escape=json '{ "timestamp": "$time_iso8601", '
                     '"enviornment": "{{ environments | default("ENV") | upper }}", '
                     '"group": "{{ group_names[0] | default("GROUP") | upper }}", '
+                    '"subscription": "{{ subscription | default("DEFAULT") | upper }}", '
+                    '"region": "{{ region | default("DEFAULT") | upper }}", '
                     '"body_bytes_sent": $body_bytes_sent, '
                     '"connection_requests": $connection_requests, '
                     '"host": "$host", '

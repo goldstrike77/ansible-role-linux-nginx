@@ -64,6 +64,8 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `ngx_syslog_server`: # Defines the address list of a syslog server.
 
 ##### Service Mesh
+* `subscription`: Define the service subscription.
+* `region`: Define the service region.
 * `environments`: Define the service environment.
 * `exporter_is_install`: Whether to install prometheus exporter.
 * `consul_public_register`: Whether register a exporter service with public consul client.
@@ -236,6 +238,8 @@ You can also use the group_vars or the host_vars files for setting the variables
         backend_port: '9000'
         sticky: 'ip_hash'
         keepalive: '32'
+    subscription: 'default'
+    region: 'default'
     environments: 'SIT'
     exporter_is_install: false
     consul_public_register: false

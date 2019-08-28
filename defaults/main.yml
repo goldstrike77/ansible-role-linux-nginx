@@ -28,6 +28,8 @@ ngx_syslog_server: # Defines the address list of a syslog server.
   - '127.0.0.1'
 
 # Service Mesh #
+subscription: 'default' # Define the service subscription.
+region: 'default' # Define the service region.
 environments: 'SIT' # Define the service environment.
 exporter_is_install: false # Whether to install prometheus exporter.
 consul_public_register: false # Whether register a exporter service with public consul client.

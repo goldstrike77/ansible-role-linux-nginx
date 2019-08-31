@@ -150,7 +150,7 @@ You can also use the group_vars or the host_vars files for setting the variables
 
     ngx_version: 'standard'
     ngx_selinux: false
-    ngx_site_path: '/data/nginx_site'
+    ngx_site_path: '/data/nginx/site'
     ngx_client_body_timeout: '10'
     ngx_client_max_body_size: '2m'
     ngx_conf_path: '/etc/nginx'
@@ -167,7 +167,7 @@ You can also use the group_vars or the host_vars files for setting the variables
     ngx_worker_connections: '20480'
     ngx_acc_syslog_port: '12301'
     ngx_err_syslog_port: '12302'
-    ngx_logs_path: '/data/nginx_logs'
+    ngx_logs_path: '/data/nginx/logs'
     ngx_syslog: false
     ngx_syslog_server:
       - '127.0.0.1'

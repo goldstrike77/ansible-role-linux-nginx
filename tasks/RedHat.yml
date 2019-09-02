@@ -14,7 +14,7 @@
 
 - name: Install the NGinx dependent packages
   yum:
-    name: '{{ ",".join(vars["ngx_dependent_packages_" + ansible_os_family]) }}'
+    name: '{{ ngx_dependent_packages }}'
     state: 'present'
     validate_certs: 'no'
     disable_gpg_check: 'yes'
@@ -25,7 +25,7 @@
 
 - name: Install the NGinx packages
   yum:
-    name: '{{ ",".join(vars["ngx_standard_packages_" + ansible_os_family]) }}'
+    name: '{{ ngx_standard_packages }}'
     state: 'present'
     enablerepo: 'nginx-basearch'
     validate_certs: 'no'
@@ -38,7 +38,7 @@
 
 - name: Install the NGinx extras packages
   yum:
-    name: '{{ ",".join(vars["ngx_extras_packages_" + ansible_os_family]) }}'
+    name: '{{ ngx_extras_packages }}'
     state: 'present'
     enablerepo: 'nginx-basearch,nginx-noarch'
     validate_certs: 'no'

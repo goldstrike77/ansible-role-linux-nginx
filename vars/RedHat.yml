@@ -1,6 +1,6 @@
 ---
 ngx_repo_name: 'nginx'
-ngx_dependent_packages_RedHat:
+ngx_dependent_packages:
   - 'policycoreutils-python'
   - 'libselinux-python'
   - 'libsemanage-python'
@@ -9,7 +9,7 @@ ngx_dependent_packages_RedHat:
 ngx_standard_repo:
   - name: 'nginx-basearch'
     url: 'http://nginx.org/packages/centos/$releasever/$basearch/'
-ngx_standard_packages_RedHat:
+ngx_standard_packages:
   - 'nginx'
 
 # Extras version
@@ -18,7 +18,7 @@ ngx_extras_repo:
     url: 'http://cache.omygods.com/getpagespeed/redhat/$releasever/$basearch/'
   - name: 'nginx-noarch'
     url: 'http://cache.omygods.com/getpagespeed/redhat/$releasever/noarch/'
-ngx_extras_packages_RedHat:
+ngx_extras_packages:
   - 'nginx-module-headers-more'
   - 'nginx-module-nbr'
   - 'nginx-module-nps'

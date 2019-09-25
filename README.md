@@ -39,7 +39,6 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 
 ##### General parameters
 * `ngx_version`: extras or standard, extras includes party modules likes PageSpeed,Brotli,ModSecurity,Headers-More and much more.
-* `ngx_selinux`: SELinux security policy.
 * `ngx_site_path`: Specify the NGinx site directory.
 * `ngx_client_body_timeout`: Defines a timeout for reading client request body.
 * `ngx_client_max_body_size`: The maximum allowed size of the client request body.
@@ -148,7 +147,6 @@ Including an example of how to use your role (for instance, with variables passe
 You can also use the group_vars or the host_vars files for setting the variables needed for this role. File you should change: group_vars/all or host_vars/`group_name`
 
     ngx_version: 'standard'
-    ngx_selinux: false
     ngx_site_path: '/data/nginx/site'
     ngx_client_body_timeout: '10'
     ngx_client_max_body_size: '2m'

@@ -2,7 +2,7 @@
 - name: Creating NGinx main folder
   file:
     dest: '{{ item }}'
-    state: directory
+    state: 'directory'
     owner: '{{ ngx_arg.user }}'
     group: '{{ ngx_arg.user }}'
     mode: '0755'
@@ -13,7 +13,7 @@
 - name: Creating NGinx site folder
   file:
     dest: '{{ ngx_site_path }}/{{ item.domain }}'
-    state: directory
+    state: 'directory'
     owner: '{{ ngx_arg.user }}'
     group: '{{ ngx_arg.user }}'
     mode: '0755'

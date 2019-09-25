@@ -2,7 +2,6 @@
 # General parameters #
 ngx_is_install: false # A boolean value, whether install the NGinx.
 ngx_version: 'standard' # extras or standard, extras includes party modules likes PageSpeed,Brotli,ModSecurity,Headers-More and much more.
-ngx_selinux: false # SELinux security policy.
 ngx_site_path: '/data/nginx/site' # Specify the NGinx site directory.
 ngx_client_body_timeout: '10' # Defines a timeout for reading client request body.
 ngx_client_max_body_size: '2m' # The maximum allowed size of the client request body.

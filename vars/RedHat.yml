@@ -1,10 +1,10 @@
 ---
 ngx_repo_name: 'nginx'
 ngx_dependent_packages:
-  - 'libselinux-python'
-  - 'libselinux-utils'
-  - 'libsemanage-python'
-  - 'policycoreutils-python'
+  - 'libselinux-python'
+  - 'libselinux-utils'
+  - 'libsemanage-python'
+  - 'policycoreutils-python'
 
 # Standard version
 ngx_standard_repo:

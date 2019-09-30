@@ -38,3 +38,17 @@
     persistent: 'yes'
   when:
     - ngx_selinux | bool
+
+- name: Allow NGinx to listen on service port
+  seport:
+    ports: '{{ item }}'
+    proto: 'tcp'
+    setype: 'http_port_t'
+    state: 'present'
+  loop:
+    - '{{ ngx_port_api }}'
+    - '{{ ngx_port_exporter }}'
+    - '{{ ngx_port_http }}'
+    - '{{ ngx_port_https }}'
+  when:
+    - ngx_selinux | bool

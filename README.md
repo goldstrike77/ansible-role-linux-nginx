@@ -133,7 +133,8 @@ There are some variables in vars/main.yml:
 * `ngx_conf_scripts`: Specify the NGinx configure and script files.
 
 ## Dependencies
-There are no dependencies on other roles.
+- Ansible versions >= 2.8
+- Python >= 2.7.5
 
 ## Example
 ### Vars in role configuration

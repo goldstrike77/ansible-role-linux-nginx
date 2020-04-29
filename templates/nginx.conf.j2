@@ -83,7 +83,7 @@ http {
                     '$map_upstream_response_time';
   log_format syslog escape=json '{ "timestamp": "$time_iso8601", '
                     '"enviornment": "{{ environments | default("ENV") | upper }}", '
-                    '"group": "{{ group_names[0] | default("GROUP") | upper }}", '
+                    '"group": "{{ group_names[-1] | default("GROUP") | upper }}", '
 {% if tags is defined %}
 {% for key,value in tags.iteritems() %}
                     '"{{ key }}": "{{ value }}", '

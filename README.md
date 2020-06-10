@@ -25,7 +25,7 @@ __Table of Contents__
 - [Contributors](#Contributors)
 
 ## Overview
-This Ansible role installs NGinx on linux operating system, including establishing a filesystem structure and server configuration with some common operational features.
+This Ansible role installs NGinx on linux operating system, including establishing a filesystem structure and server configuration with some common operational features. NGinx is a web server which can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache.
 
 ## Requirements
 ### Operating systems

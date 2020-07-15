@@ -2,23 +2,40 @@
 - name: Include tasks for specific OS
   include: '{{ ansible_os_family }}.yml'
 
+- name: Install requirement python package.
+  pip:
+    name: '{{ ngx_python_dependent_packages }}'
+    state: 'forcereinstall'
+    extra_args: '--default-timeout=120 --ignore-installed -i https://{{ ngx_pypi_url }}/simple --trusted-host {{ ngx_pypi_url }}'
+  register: ngx_python_status
+  until: ngx_python_status is succeeded
+  retries: 5
+  delay: 2
+
 - name: Configure the NGinx firewall
   include: 'firewall.yml'
 
 - name: Straight to getenforce selinux status
   include: 'selinux.yml'
 
+- name: Configuration the NGinx
+  include: 'configureation.yml'
+
+- name: Include certificate tasks
+  include: 'certificates.yml'
+  loop: '{{ ngx_site }}'
+  loop_control:
+    loop_var: ngx_site_item
+  when: ngx_site is defined
+
 - name: Generate strong Diffie–Hellman key exchange
   include: 'dhparam.yml'
   when: ngx_dhparam | bool
 
-- name: Configuration the NGinx
-  include: 'configureation.yml'
-
 - name: Reload the service
   shell: echo ''
   notify: 'Reloading the Nginx service'
-  when: pki_update is changed or conf_update is changed or site_update is changed or effects_update is changed
+  when: conf_update is changed or site_update is changed or effects_update is changed
 
 - name: Force the handler to run immediately
   meta: flush_handlers

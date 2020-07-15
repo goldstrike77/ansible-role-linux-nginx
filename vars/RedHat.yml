@@ -1,6 +1,7 @@
 ---
 ngx_repo_name: 'nginx'
 ngx_dependent_packages:
+  - 'python-pip'
   - 'libselinux-python'
   - 'libselinux-utils'
   - 'libsemanage-python'

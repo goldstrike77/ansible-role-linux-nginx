@@ -1,0 +1,67 @@
+---
+- name: Check private key exists.
+  stat:
+    path: '{{ ngx_conf_path }}/ssl/{{ ngx_site_item.domain }}.key'
+  register: check_cert_keys
+
+- name: Certificate Signing operation.
+  block:
+    - name: Creating Certificate folder.
+      file:
+        dest: '{{ ngx_conf_path }}/ssl'
+        state: 'directory'
+        owner: 'root'
+        mode: '1750'
+    - name: NGinx TLS session tickets file transfer
+      copy:
+        src: 'ssl/session_ticket.key'
+        dest: '{{ ngx_conf_path }}/ssl/session_ticket.key'
+        owner: 'root'
+        group: 'root'
+        mode: '0640'
+    - name: Selfsigned CA file transfer.
+      copy:
+        src: 'ssl/{{ item }}'
+        dest: '{{ ngx_conf_path }}/ssl/{{ item }}'
+        owner: 'root'
+        mode: '640'
+      loop:
+        - 'ca-cert.pem'
+        - 'ca-key.pem'
+    - name: Generate an OpenSSL private key.
+      openssl_privatekey:
+        path: '{{ ngx_conf_path }}/ssl/{{ ngx_site_item.domain }}.key'
+        select_crypto_backend: 'cryptography'
+        size: '4096'
+        type: 'RSA'
+        owner: 'root'
+        mode: '0644'
+        state: 'present'
+    - name: Generate an OpenSSL Certificate Signing Request.
+      openssl_csr:
+        path: '{{ ngx_conf_path }}/ssl/{{ ngx_site_item.domain }}.csr'
+        privatekey_path: '{{ ngx_conf_path }}/ssl/{{ ngx_site_item.domain }}.key'
+        select_crypto_backend: 'cryptography'
+        common_name: 'Server'
+        subject_alt_name:
+          - 'DNS:{{ ansible_hostname }}'
+          - 'DNS:{{ ansible_fqdn }}'
+          - 'DNS:{{ ngx_site_item.domain }}'
+          - 'DNS:{{ group_names[-1] | upper | regex_replace("_", "-") }}-{{ environments | upper | regex_replace("_", "-") }}-nginx.service.{{ datacenter | lower }}.{{ domain | lower }}'
+          - 'IP:{{ ansible_default_ipv4.address }}'
+        owner: 'root'
+        mode: '0644'
+        state: 'present'
+    - name: Generate an OpenSSL certificate signed with your own CA certificate.
+      openssl_certificate:
+        path: '{{ ngx_conf_path }}/ssl/{{ ngx_site_item.domain }}.crt'
+        csr_path: '{{ ngx_conf_path }}/ssl/{{ ngx_site_item.domain }}.csr'
+        ownca_path: '{{ ngx_conf_path }}/ssl/ca-cert.pem'
+        ownca_privatekey_path: '{{ ngx_conf_path }}/ssl/ca-key.pem'
+        select_crypto_backend: 'cryptography'
+        ownca_not_after: '+7305d'
+        provider: 'ownca'
+        owner: 'root'
+        mode: '0644'
+        state: 'present'
+  when: not check_cert_keys.stat.exists or check_cert_keys.stat.size == 0

@@ -20,8 +20,8 @@
     disable_gpg_check: 'yes'
   register: yum_status
   until: yum_status is succeeded
-  retries: 3
-  delay: 5
+  retries: 5
+  delay: 2
 
 - name: Install the NGinx packages
   yum:
@@ -33,8 +33,8 @@
     disable_gpg_check: 'yes'
   register: yum_status
   until: yum_status is succeeded
-  retries: 3
-  delay: 5
+  retries: 5
+  delay: 2
 
 - name: Install the NGinx extras packages
   yum:
@@ -47,5 +47,5 @@
   when: ngx_version == 'extras'
   register: yum_status
   until: yum_status is succeeded
-  retries: 3
-  delay: 5
+  retries: 5
+  delay: 2

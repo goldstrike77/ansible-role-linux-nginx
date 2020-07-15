@@ -1,1 +1,1 @@
-NGINX_EXPORTER_OPTS='-web.listen-address ":{{ ngx_port_exporter }}" -nginx.scrape-uri http://127.0.0.1:{{ ngx_port_api }}/api'
+NGINX_EXPORTER_OPTS='-web.listen-address "{{ ansible_default_ipv4.address }}:{{ ngx_port_exporter }}" -nginx.scrape-uri http://127.0.0.1:{{ ngx_port_api }}/api'

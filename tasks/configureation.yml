@@ -32,17 +32,6 @@
   with_items:
     - '{{ ngx_kernel_parameters }}'
 
-- name: NGinx PKI file transfer
-  copy:
-    src: '{{ item.src }}'
-    dest: '{{ item.dest }}'
-    owner: '{{ item.owner }}'
-    group: '{{ item.group }}'
-    mode: '0640'
-  with_items:
-    - { src: 'ssl/', dest: '{{ ngx_conf_path }}/ssl', owner: 'root', group: 'root' }
-  register: pki_update
-
 - name: NGinx main configuration file transfer
   template:
     src: '{{ item.src }}'

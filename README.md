@@ -25,11 +25,11 @@ __Table of Contents__
 - [Contributors](#Contributors)
 
 ## Overview
-This Ansible role installs NGinx on linux operating system, including establishing a filesystem structure and server configuration with some common operational features. NGinx is a web server which can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache.
+NGinx is a web server which can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache. NGinx accelerates content and application delivery, improves security, facilitates availability and scalability for the busiest web sites on the Internet.
 
 ## Requirements
 ### Operating systems
-This role will work on the following operating systems:
+This Ansible role installs NGinx on the Linux operating system, including establishing a filesystem structure and server configuration with some common operational features, Will works on the following operating systems:
 
   * CentOS 7
 
@@ -118,9 +118,11 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 
 ##### Service Mesh
 * `environments`: Define the service environment.
+* `datacenter`: Define the DataCenter.
+* `domain`: Define the Domain.
 * `tags`: Define the service custom label.
 * `exporter_is_install`: Whether to install prometheus exporter.
-* `consul_public_register`: false Whether register a exporter service with public consul client.
+* `consul_public_register`: Whether register a exporter service with public consul client.
 * `consul_public_exporter_token`: Public Consul client ACL token.
 * `consul_public_http_prot`: The consul Hypertext Transfer Protocol.
 * `consul_public_clients`: List of public consul clients.
@@ -140,117 +142,123 @@ There are some variables in vars/main.yml:
 ### Vars in role configuration
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: all
-      roles:
-         - role: ansible-role-linux-nginx
-           ngx_version: 'standard'
+```yaml
+- hosts: all
+  roles:
+    - role: ansible-role-linux-nginx
+      ngx_version: 'standard'
+```
 
 ### Combination of group vars and playbook
-You can also use the group_vars or the host_vars files for setting the variables needed for this role. File you should change: group_vars/all or host_vars/`group_name`
+You can also use the group_vars or the host_vars files for setting the variables needed for this role. File you should change: group_vars/all or host_vars/`group_name`.
 
-    ngx_version: 'standard'
-    ngx_site_path: '/data/nginx/site'
-    ngx_client_body_timeout: '10'
-    ngx_client_max_body_size: '2m'
-    ngx_conf_path: '/etc/nginx'
-    ngx_expires: 'max'
-    ngx_fastcgi_read_timeout: '60'
-    ngx_keepalive_requests: '5000'
-    ngx_keepalive_timeout: '15'
-    ngx_proxy_connect_timeout: '20'
-    ngx_proxy_read_timeout: '20'
-    ngx_proxy_send_timeout: '20'
-    ngx_real_ip_header: 'X-Forwarded-For'
-    ngx_send_timeout: '30'
-    ngx_temp_path: '/dev/shm'
-    ngx_worker_connections: '20480'
-    ngx_acc_syslog_port: '12301'
-    ngx_err_syslog_port: '12302'
-    ngx_logs_path: '/data/nginx/logs'
-    ngx_syslog: false
-    ngx_syslog_server:
-      - '127.0.0.1'
-    ngx_port_api: '10088'
-    ngx_port_exporter: '9113'
-    ngx_port_http: '80'
-    ngx_port_https: '443'
-    ngx_header:
-      - 'Referrer-Policy "no-referrer-when-downgrade";'
-      - 'Strict-Transport-Security "max-age=31536000; includeSubDomains; preload;";'
-      - 'X-Content-Type-Options "nosniff";'
-      - 'X-Frame-Options "SAMEORIGIN";'
-      - 'X-Xss-Protection "1; mode=block";'
-    ngx_arg:
-      charset: 'utf-8'
-      etag: 'off'
-      server_tokens: 'off'
-      tcp_nodelay: 'on'
-      tcp_nopush: 'on'
-      ulimit_nofile: '131088'
-      ulimit_nproc: '131088'
-      user: 'nobody'
-      worker_cpu_affinity: 'auto'
-      worker_processes: 'auto'
-    ngx_allow_methods:
-      - 'POST'
-      - 'PUT'
-      - 'GET'
-      - 'HEAD'
-    ngx_resolver_dns:
-      - '223.5.5.5'
-      - '223.6.6.6'
-      - '8.8.8.8'
-    ngx_resolver_timeout: '5s'
-    ngx_set_real_ip_from:
-      - '10.0.0.0/8'
-      - '172.16.0.0/11'
-      - '192.168.0.0/24'
-      - '127.0.0.1'
-    ngx_block_agents: false
-    ngx_block_string: false
-    ngx_modsecurity: false
-    ngx_ssl_protocols: 'modern'
-    ngx_compress: false
-    ngx_pagespeed: false
-    ngx_dhparam: false
-    ngx_dhparam_file: 'dhparam.pem'
-    ngx_dhparam_size: '2048'
-    ngx_dhparam_update: true
-    ngx_dhparam_update_interval: 'monthly'
-    ngx_HPKP:
-      - 'bb+uANN7nNc/j7R95lkXrwDg3d9C286sIMF8AnXuIJU='
-      - 'du6FkDdMcVQ3u8prumAo6t3i3G27uMP2EOhR8R0at/U='
-      - '980Ionqp3wkYtN9SZVgMzuWQzJta1nfxNPwTem1X0uc='
-    ngx_site:
-      - domain: 'b.example.com'
-        syntax:
-          - 'location ~* \.php$ {'
-          - '  expires off;'
-          - '  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;'
-          - '  fastcgi_param SCRIPT_NAME $fastcgi_script_name;'
-          - '  include fastcgi_params;'
-          - '  fastcgi_pass backend;'
-          - '}'
-        backend_address:
-          - '1.1.1.1'
-          - '1.1.1.2'
-        backend_port: '9000'
-        sticky: 'ip_hash'
-        keepalive: '32'
-    environments: 'Development'
-    tags:
-      subscription: 'default'
-      owner: 'nobody'
-      department: 'Infrastructure'
-      organization: 'The Company'
-      region: 'IDC01'
-    exporter_is_install: false
-    consul_public_register: false
-    consul_public_exporter_token: '00000000-0000-0000-0000-000000000000'
-    consul_public_http_prot: 'https'
-    consul_public_http_port: '8500'
-    consul_public_clients:
-      - '127.0.0.1'
+```yaml
+ngx_version: 'standard'
+ngx_site_path: '/data/nginx/site'
+ngx_client_body_timeout: '10'
+ngx_client_max_body_size: '2m'
+ngx_conf_path: '/etc/nginx'
+ngx_expires: 'max'
+ngx_fastcgi_read_timeout: '60'
+ngx_keepalive_requests: '5000'
+ngx_keepalive_timeout: '15'
+ngx_proxy_connect_timeout: '20'
+ngx_proxy_read_timeout: '20'
+ngx_proxy_send_timeout: '20'
+ngx_real_ip_header: 'X-Forwarded-For'
+ngx_send_timeout: '30'
+ngx_temp_path: '/dev/shm'
+ngx_worker_connections: '20480'
+ngx_acc_syslog_port: '12301'
+ngx_err_syslog_port: '12302'
+ngx_logs_path: '/data/nginx/logs'
+ngx_syslog: false
+ngx_syslog_server:
+  - '127.0.0.1'
+ngx_port_api: '10088'
+ngx_port_exporter: '9113'
+ngx_port_http: '80'
+ngx_port_https: '443'
+ngx_header:
+  - 'Referrer-Policy "no-referrer-when-downgrade";'
+  - 'Strict-Transport-Security "max-age=31536000; includeSubDomains; preload;";'
+  - 'X-Content-Type-Options "nosniff";'
+  - 'X-Frame-Options "SAMEORIGIN";'
+  - 'X-Xss-Protection "1; mode=block";'
+ngx_arg:
+  charset: 'utf-8'
+  etag: 'off'
+  server_tokens: 'off'
+  tcp_nodelay: 'on'
+  tcp_nopush: 'on'
+  ulimit_nofile: '131088'
+  ulimit_nproc: '131088'
+  user: 'nobody'
+  worker_cpu_affinity: 'auto'
+  worker_processes: 'auto'
+ngx_allow_methods:
+  - 'POST'
+  - 'PUT'
+  - 'GET'
+  - 'HEAD'
+ngx_resolver_dns:
+  - '223.5.5.5'
+  - '223.6.6.6'
+  - '8.8.8.8'
+ngx_resolver_timeout: '5s'
+ngx_set_real_ip_from:
+  - '10.0.0.0/8'
+  - '172.16.0.0/11'
+  - '192.168.0.0/24'
+  - '127.0.0.1'
+ngx_block_agents: false
+ngx_block_string: false
+ngx_modsecurity: false
+ngx_ssl_protocols: 'modern'
+ngx_compress: false
+ngx_pagespeed: false
+ngx_dhparam: false
+ngx_dhparam_file: 'dhparam.pem'
+ngx_dhparam_size: '2048'
+ngx_dhparam_update: true
+ngx_dhparam_update_interval: 'monthly'
+ngx_HPKP:
+  - 'bb+uANN7nNc/j7R95lkXrwDg3d9C286sIMF8AnXuIJU='
+  - 'du6FkDdMcVQ3u8prumAo6t3i3G27uMP2EOhR8R0at/U='
+  - '980Ionqp3wkYtN9SZVgMzuWQzJta1nfxNPwTem1X0uc='
+ngx_site:
+  - domain: 'b.example.com'
+    syntax:
+      - 'location ~* \.php$ {'
+      - '  expires off;'
+      - '  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;'
+      - '  fastcgi_param SCRIPT_NAME $fastcgi_script_name;'
+      - '  include fastcgi_params;'
+      - '  fastcgi_pass backend;'
+      - '}'
+    backend_address:
+      - '1.1.1.1'
+      - '1.1.1.2'
+    backend_port: '9000'
+    sticky: 'ip_hash'
+    keepalive: '32'
+environments: 'Development'
+datacenter: 'dc01'
+domain: 'local'
+tags:
+  subscription: 'default'
+  owner: 'nobody'
+  department: 'Infrastructure'
+  organization: 'The Company'
+  region: 'China'
+exporter_is_install: false
+consul_public_register: false
+consul_public_exporter_token: '00000000-0000-0000-0000-000000000000'
+consul_public_http_prot: 'https'
+consul_public_http_port: '8500'
+consul_public_clients:
+  - '127.0.0.1'
+```
 
 ## License
 ![](https://img.shields.io/badge/MIT-purple.svg?style=for-the-badge)

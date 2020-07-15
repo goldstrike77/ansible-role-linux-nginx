@@ -31,3 +31,9 @@ ngx_kernel_parameters:
   - { variable: 'net.core.optmem_max', value: '25165824' }
   - { variable: 'net.ipv4.tcp_rmem', value: '8192 87380 16777216' }
   - { variable: 'net.ipv4.tcp_wmem', value: '8192 65536 16777216' }
+
+ngx_pypi_url: 'pypi.tuna.tsinghua.edu.cn'
+
+ngx_python_dependent_packages:
+  - 'pip'
+  - 'cryptography'

@@ -9,11 +9,11 @@ server {
 {% if ngx_HPKP is defined %}
   add_header Public-Key-Pins 'pin-sha256="{{ "\"; pin-sha256=\"".join(vars["ngx_HPKP"]) }}"; max-age=63072000; includeSubDomains';
 {% endif %}
-{% if ngx_dhparam %}
-  ssl_dhparam ssl/dhparam.pem;
+{% if ngx_dhparam | bool %}
+  ssl_dhparam ssl/{{ ngx_dhparam_file }};
 {% endif %}
-  ssl_certificate ssl/server.crt;
-  ssl_certificate_key ssl/server.key;
+  ssl_certificate ssl/{{ item.domain }}.crt;
+  ssl_certificate_key ssl/{{ item.domain }}.key;
   ssl_session_cache shared:SSL:50m;
   ssl_session_ticket_key ssl/session_ticket.key;
   ssl_session_tickets off;
@@ -24,7 +24,7 @@ server {
   ssl_prefer_server_ciphers on;
   ssl_protocols {{ vars["ngx_ssl_protocols_" + ngx_ssl_protocols].protocols }};
   ssl_ciphers {{ vars["ngx_ssl_protocols_" + ngx_ssl_protocols].ciphers }};
-  listen {{ ngx_port_https }} ssl http2;
+  listen {{ ansible_default_ipv4.address }}:{{ ngx_port_https }} ssl http2;
 {% if ngx_resolver_dns is defined %}
   resolver {{ " ".join(vars["ngx_resolver_dns"]) }} valid=300s;
   resolver_timeout {{ ngx_resolver_timeout | default('5s') }};
@@ -37,14 +37,14 @@ server {
 
   access_log {{ ngx_logs_path }}/access.log main;
   error_log {{ ngx_logs_path }}/error.log notice;
-{% if ngx_syslog %}
+{% if ngx_syslog | bool %}
   access_log syslog:server={{ ngx_syslog_server | list | random(seed=inventory_hostname) }}:{{ ngx_acc_syslog_port }} syslog;
   error_log syslog:server={{ ngx_syslog_server | list | random(seed=inventory_hostname) }}:{{ ngx_err_syslog_port }};
 {% endif %}
   
   location = /favicon.ico { access_log off; log_not_found off; }
   location = /robots.txt { access_log off; log_not_found off; }
-{% if ngx_pagespeed %}
+{% if ngx_pagespeed | bool %}
   location ~ "\.pagespeed\.([a-z]\.)?[a-z]{2}\.[^.]{10}\.[^.]+" { add_header "" ""; }
   location /ngx_pagespeed_admin { allow {{ "; allow ".join(vars["ngx_set_real_ip_from"]) }}; access_log off; deny all; }
 {% endif %}

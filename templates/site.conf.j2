@@ -33,7 +33,7 @@ server {
 
   charset {{ ngx_arg.charset }};
   root {{ ngx_site_path }}/{{ item.domain }};
-  index index.html;
+  index index.html index.php;
 
   access_log {{ ngx_logs_path }}/access.log main;
   error_log {{ ngx_logs_path }}/error.log notice;

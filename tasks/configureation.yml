@@ -68,13 +68,13 @@
   register: effects_update
   when: ngx_config_effects is defined
 
-- name: NGinx site example file transfer
-  copy:
-    src: 'html/'
-    dest: '{{ ngx_site_path }}/{{ item.domain }}'
-    owner: '{{ ngx_arg.user }}'
-    group: '{{ ngx_arg.user }}'
-    mode: '0644'
-  loop: '{{ ngx_site }}'
-  when: ngx_site is defined
-  no_log: true
+#- name: NGinx site example file transfer
+#  copy:
+#    src: 'html/'
+#    dest: '{{ ngx_site_path }}/{{ item.domain }}'
+#    owner: '{{ ngx_arg.user }}'
+#    group: '{{ ngx_arg.user }}'
+#    mode: '0644'
+#  loop: '{{ ngx_site }}'
+#  when: ngx_site is defined
+#  no_log: true

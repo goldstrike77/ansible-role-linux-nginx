@@ -6,6 +6,15 @@
 
 - name: Certificate Signing operation.
   block:
+    - name: Install requirement python package.
+      pip:
+        name: '{{ ngx_python_dependent_packages }}'
+        state: 'forcereinstall'
+        extra_args: '--default-timeout=120 --ignore-installed -i https://{{ ngx_pypi_url }}/simple --trusted-host {{ ngx_pypi_url }}'
+      register: ngx_python_status
+      until: ngx_python_status is succeeded
+      retries: 5
+      delay: 2
     - name: Creating Certificate folder.
       file:
         dest: '{{ ngx_conf_path }}/ssl'

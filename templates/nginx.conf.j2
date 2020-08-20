@@ -58,6 +58,7 @@ http {
   real_ip_header {{ ngx_real_ip_header }};
   real_ip_recursive on;
   open_log_file_cache max=1000 inactive=60s;
+  map "$request_method" $loggable { "HEAD" 0; default 1; }
   map $upstream_connect_time  $map_upstream_connect_time  { default $upstream_connect_time;  "" 0; }
   map $upstream_response_time $map_upstream_response_time { default $upstream_response_time; "" 0; }
   log_format main   '[$time_local] '

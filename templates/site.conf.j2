@@ -29,7 +29,7 @@ server {
   resolver {{ " ".join(vars["ngx_resolver_dns"]) }} valid=300s;
   resolver_timeout {{ ngx_resolver_timeout | default('5s') }};
 {% endif %}
-  server_name {{ item.domain }};
+  server_name {{ item.domain }} {{ group_names[0] | title | regex_replace("_", "-") }}-{{ group_names[-1] | title | regex_replace("_", "-") }}-{{ environments | upper | regex_replace("_", "-") }}-nginx.service.{{ datacenter | lower }}.{{ domain | lower }};
 
   charset {{ ngx_arg.charset }};
   root {{ ngx_site_path }}/{{ item.domain }};

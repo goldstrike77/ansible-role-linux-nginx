@@ -84,7 +84,8 @@ http {
                     '$map_upstream_response_time';
   log_format syslog escape=json '{ "timestamp": "$time_iso8601", '
                     '"enviornment": "{{ environments | default("ENV") | upper }}", '
-                    '"group": "{{ group_names[-1] | default("GROUP") | upper }}", '
+                    '"project": "{{ group_names[0] | default("PROJECT") | title }}", '
+                    '"group": "{{ group_names[-1] | default("GROUP") | title }}", '
 {% if tags is defined %}
 {% for key,value in tags.iteritems() %}
                     '"{{ key }}": "{{ value }}", '

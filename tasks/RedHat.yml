@@ -4,13 +4,12 @@
 
 - name: Add NGinx YUM repositories
   yum_repository:
-    name: '{{ item.name }}'
-    description: '{{ item.name }} repo'
+    name: '{{ ngx_repo_name }}'
+    description: '{{ ngx_repo_name }} repo'
     file: '{{ ngx_repo_name }}'
-    baseurl: '{{ item.url }}'
+    baseurl: '{{ ngx_repo_url }}'
     gpgcheck: 'no'
     timeout: '60'
-  loop: '{{ vars["ngx_" + ngx_version + "_repo"] }}'
 
 - name: Install the NGinx dependent packages
   yum:
@@ -25,26 +24,12 @@
 
 - name: Install the NGinx packages
   yum:
-    name: '{{ ngx_standard_packages }}'
+    name: '{{ ngx_packages }}'
     state: 'present'
-    enablerepo: 'nginx-basearch'
+    enablerepo: '{{ ngx_repo_name }}'
     validate_certs: 'no'
     update_cache: 'yes'  
     disable_gpg_check: 'yes'
-  register: yum_status
-  until: yum_status is succeeded
-  retries: 5
-  delay: 2
-
-- name: Install the NGinx extras packages
-  yum:
-    name: '{{ ngx_extras_packages }}'
-    state: 'present'
-    enablerepo: 'nginx-basearch,nginx-noarch'
-    validate_certs: 'no'
-    update_cache: 'yes'
-    disable_gpg_check: 'yes'
-  when: ngx_version == 'extras'
   register: yum_status
   until: yum_status is succeeded
   retries: 5

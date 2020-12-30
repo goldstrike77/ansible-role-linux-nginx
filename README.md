@@ -38,7 +38,6 @@ This Ansible role installs NGinx on the Linux operating system, including establ
 There are some variables in defaults/main.yml which can (Or needs to) be overridden:
 
 ##### General parameters
-* `ngx_version`: extras or standard, extras includes party modules likes PageSpeed,Brotli,ModSecurity,Headers-More and much more.
 * `ngx_site_path`: Specify the NGinx site directory.
 * `ngx_client_body_timeout`: Defines a timeout for reading client request body.
 * `ngx_client_max_body_size`: The maximum allowed size of the client request body.
@@ -96,7 +95,6 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 ##### Security Variables
 * `ngx_block_agents`: Enables or disables block unsafe User Agents.
 * `ngx_block_string`: Enables or disables block includes Exploits / File injections / Spam / SQL injections.
-* `ngx_modsecurity`: Enables or disables ModSecurity modules.
 * `ngx_ssl_protocols`: intermediate or modern, defines SSL protocol profile.
 
 ##### Performance Variables
@@ -120,6 +118,7 @@ There are some variables in defaults/main.yml which can (Or needs to) be overrid
 * `environments`: Define the service environment.
 * `datacenter`: Define the DataCenter.
 * `domain`: Define the Domain.
+* `customer`: Define the customer name.
 * `tags`: Define the service custom label.
 * `exporter_is_install`: Whether to install prometheus exporter.
 * `consul_public_register`: Whether register a exporter service with public consul client.
@@ -146,14 +145,12 @@ Including an example of how to use your role (for instance, with variables passe
 - hosts: all
   roles:
     - role: ansible-role-linux-nginx
-      ngx_version: 'standard'
 ```
 
 ### Combination of group vars and playbook
 You can also use the group_vars or the host_vars files for setting the variables needed for this role. File you should change: group_vars/all or host_vars/`group_name`.
 
 ```yaml
-ngx_version: 'standard'
 ngx_site_path: '/data/nginx/site'
 ngx_client_body_timeout: '10'
 ngx_client_max_body_size: '2m'
@@ -213,7 +210,6 @@ ngx_set_real_ip_from:
   - '127.0.0.1'
 ngx_block_agents: false
 ngx_block_string: false
-ngx_modsecurity: false
 ngx_ssl_protocols: 'modern'
 ngx_compress: false
 ngx_pagespeed: false
@@ -242,9 +238,10 @@ ngx_site:
     backend_port: '9000'
     sticky: 'ip_hash'
     keepalive: '32'
-environments: 'Development'
+environments: 'prd'
 datacenter: 'dc01'
 domain: 'local'
+customer: 'demo'
 tags:
   subscription: 'default'
   owner: 'nobody'

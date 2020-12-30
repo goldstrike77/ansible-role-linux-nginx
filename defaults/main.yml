@@ -1,7 +1,6 @@
 ---
 # General parameters #
 ngx_is_install: false # A boolean value, whether install the NGinx.
-ngx_version: 'standard' # extras or standard, extras includes party modules likes PageSpeed,Brotli,ModSecurity,Headers-More and much more.
 ngx_site_path: '/data/nginx/site' # Specify the NGinx site directory.
 ngx_client_body_timeout: '10' # Defines a timeout for reading client request body.
 ngx_client_max_body_size: '2m' # The maximum allowed size of the client request body.
@@ -82,7 +81,6 @@ ngx_set_real_ip_from: # Defines trusted addresses that are known to send correct
 # Security Variables #
 ngx_block_agents: false # Enables or disables block unsafe User Agents.
 ngx_block_string: false # Enables or disables block includes Exploits / File injections / Spam / SQL injections.
-ngx_modsecurity: false # Enables or disables ModSecurity modules.
 ngx_ssl_protocols: 'modern' # intermediate or modern, defines SSL protocol profile.
 
 # Performance Variables #
@@ -142,9 +140,10 @@ ngx_dhparam_update_interval: 'monthly' # Key renewal period.
 #    keepalive: '32'
 
 # Service Mesh #
-environments: 'Development' # Define the service environment.
+environments: 'prd' # Define the service environment.
 datacenter: 'dc01' # Define the DataCenter.
 domain: 'local' # Define the Domain.
+customer: 'demo' # Define the customer name.
 #tags: # Define the service custom label.
 #  subscription: 'default'
 #  owner: 'nobody'

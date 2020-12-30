@@ -1,5 +1,4 @@
 ---
-ngx_repo_name: 'nginx'
 ngx_dependent_packages:
   - 'python-pip'
   - 'libselinux-python'
@@ -7,27 +6,11 @@ ngx_dependent_packages:
   - 'libsemanage-python'
   - 'policycoreutils-python'
 
-# Standard version
-ngx_standard_repo:
-  - name: 'nginx-basearch'
-    url: 'http://nginx.org/packages/centos/$releasever/$basearch/'
-ngx_standard_packages:
+ngx_repo_name: 'nginx'
+ngx_repo_url: 'http://nginx.org/packages/centos/$releasever/$basearch/'
+ngx_packages:
   - 'nginx'
 
-# Extras version
-ngx_extras_repo:
-  - name: 'nginx-basearch'
-    url: 'http://cache.omygods.com/getpagespeed/redhat/{{ ansible_distribution_major_version }}/$basearch/'
-  - name: 'nginx-noarch'
-    url: 'http://cache.omygods.com/getpagespeed/redhat/{{ ansible_distribution_major_version }}/noarch/'
-ngx_extras_packages:
-  - 'nginx-module-headers-more'
-  - 'nginx-module-nbr'
-  - 'nginx-module-nps'
-  - 'nginx-module-security'
-  - 'nginx-owasp-crs'
-
-# Nginx prometheus exporter repo
 ngx_exporter_repo_name: 'prometheus'
-ngx_exporter_repo_url: "http://cache.omygods.com/prometheus-rpm/release/el/{{ ansible_distribution_major_version }}/$basearch"
+ngx_exporter_repo_url: "http://cache.omygods.com/prometheus-rpm/release/el/{{ ansible_distribution_major_version }}/$basearch/"
 ngx_exporter_software: 'nginx_exporter'

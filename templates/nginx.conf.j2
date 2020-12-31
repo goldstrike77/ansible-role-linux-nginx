@@ -72,7 +72,7 @@ http {
                     '"project": "{{ group_names[-1] | default("Project") | title }}", '
                     '"group": "{{ group_names[0] | default("Group") | title }}", '
 {% if tags is defined %}
-{% for key,value in tags.iteritems() %}
+{% for key,value in tags.items() %}
                     '"{{ key }}": "{{ value }}", '
 {% endfor %}
 {% endif %}

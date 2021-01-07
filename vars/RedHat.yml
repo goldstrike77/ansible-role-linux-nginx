@@ -12,5 +12,5 @@ ngx_packages:
   - 'nginx'
 
 ngx_exporter_repo_name: 'prometheus'
-ngx_exporter_repo_url: "http://cache.omygods.com/prometheus-rpm/release/el/{{ ansible_distribution_major_version }}/$basearch/"
+ngx_exporter_repo_url: 'http://cache.omygods.com/prometheus-rpm/release/el/$releasever/$basearch/'
 ngx_exporter_software: 'nginx_exporter'

@@ -35,5 +35,5 @@ ngx_kernel_parameters:
 ngx_pypi_url: 'pypi.tuna.tsinghua.edu.cn'
 
 ngx_python_dependent_packages:
-  - 'pip'
+  - 'pip==20.3.4'
   - 'cryptography'

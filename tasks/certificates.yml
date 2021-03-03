@@ -10,7 +10,7 @@
       pip:
         name: '{{ ngx_python_dependent_packages }}'
         state: 'forcereinstall'
-        extra_args: '--default-timeout=120 --ignore-installed -i https://{{ ngx_pypi_url }}/simple --trusted-host {{ ngx_pypi_url }}'
+        extra_args: '--default-timeout=120 -i https://{{ ngx_pypi_url }}/simple --trusted-host {{ ngx_pypi_url }}'
       register: ngx_python_status
       until: ngx_python_status is succeeded
       retries: 5

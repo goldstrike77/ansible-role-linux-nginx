@@ -168,11 +168,11 @@ ngx_send_timeout: '30'
 ngx_temp_path: '/dev/shm'
 ngx_worker_connections: '20480'
 ngx_acc_syslog_port: '12301'
-ngx_err_syslog_port: '12302'
+ngx_err_syslog_port: '1514'
 ngx_logs_path: '/data/nginx/logs'
-ngx_syslog: false
+ngx_syslog: true
 ngx_syslog_server:
-  - '127.0.0.1'
+  - 'demo-prd-infra-monitor-logstash.service.dc01.local'
 ngx_port_api: '10088'
 ngx_port_exporter: '9113'
 ngx_port_http: '80'

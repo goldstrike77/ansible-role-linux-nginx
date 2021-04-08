@@ -19,11 +19,11 @@ ngx_worker_connections: '20480' # The maximum number of simultaneous connections
 
 # Log Variables #
 ngx_acc_syslog_port: '12301' # Defines the input port of a syslog server for access log.
-ngx_err_syslog_port: '12302' # Defines the input port of a syslog server for error log.
+ngx_err_syslog_port: '1514' # Defines the input port of a syslog server for error log.
 ngx_logs_path: '/data/nginx/logs' # Specify the NGinx logs directory.
 ngx_syslog: false # Enables or disables syslog.
 ngx_syslog_server: # Defines the address list of a syslog server.
-  - '127.0.0.1'
+  - 'demo-prd-infra-monitor-logstash.service.dc01.local'
 
 # Listen port #
 ngx_port_api: '10088' # Status listen port.

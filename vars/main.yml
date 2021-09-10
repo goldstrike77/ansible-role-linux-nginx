@@ -21,7 +21,7 @@ ngx_ssl_protocols_old:
 ngx_kernel_parameters:
   - { variable: 'kernel.msgmax', value: '65536' }
   - { variable: 'kernel.msgmnb', value: '65536' }
-  - { variable: 'kernel.pid_max', value: '65536' }  
+  - { variable: 'kernel.pid_max', value: '4194303' }  
   - { variable: 'net.core.rmem_default', value: '2097152' }
   - { variable: 'net.core.rmem_max', value: '2097152' }
   - { variable: 'net.core.wmem_default', value: '2097152' }

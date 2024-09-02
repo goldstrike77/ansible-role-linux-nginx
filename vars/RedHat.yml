@@ -1,16 +1,20 @@
 ---
 ngx_dependent_packages:
-  - 'python-pip'
-  - 'libselinux-python'
-  - 'libselinux-utils'
-  - 'libsemanage-python'
-  - 'policycoreutils-python'
+  - "libselinux-utils"
+  - "policycoreutils-python-utils"
+  - "python3-boto3"
+  - "python3-cffi"
+  - "python3-cryptography"
+  - "python3-idna"
+  - "python3-paramiko"
+  - "python3-pip"
+  - "python3-pyOpenSSL"
 
-ngx_repo_name: 'nginx'
-ngx_repo_url: 'http://nginx.org/packages/centos/$releasever/$basearch/'
+ngx_repo_name: "nginx"
+ngx_repo_url: "http://nginx.org/packages/centos/$releasever/$basearch/"
 ngx_packages:
-  - 'nginx'
+  - "nginx"
 
-ngx_exporter_repo_name: 'prometheus'
-ngx_exporter_repo_url: 'http://cache.omygods.com/prometheus-rpm/release/el/$releasever/$basearch/'
-ngx_exporter_software: 'nginx_exporter'
+ngx_exporter_repo_name: "prometheus"
+ngx_exporter_repo_url: "http://cache.omygods.com/prometheus-rpm/release/el/$releasever/$basearch/"
+ngx_exporter_software: "nginx_exporter"

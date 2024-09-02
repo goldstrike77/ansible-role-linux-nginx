@@ -31,7 +31,7 @@ NGinx is a web server which can also be used as a reverse proxy, load balancer, 
 ### Operating systems
 This Ansible role installs NGinx on the Linux operating system, including establishing a filesystem structure and server configuration with some common operational features, Will works on the following operating systems:
 
-  * CentOS 7
+  * CentOS 8
 
 ## Role variables
 ### Main parameters #
